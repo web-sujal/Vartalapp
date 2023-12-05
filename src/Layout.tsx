@@ -1,14 +1,19 @@
-import { useLocation, Navigate } from "react-router-dom";
-import Home from "./pages/Home";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
 
 const Layout = () => {
-  const location = useLocation();
+  // const location = useLocation();
 
-  if (location.pathname === "/") {
-    return <Navigate to="/login" />;
-  }
+  // if (location.pathname === "/") {
+  //   return <Navigate to="/home" />;
+  // }
 
-  return <Home />;
+  return (
+    <div className="flex h-screen gap-1 bg-neutral-200 p-4 dark:bg-slate-900">
+      <Sidebar />
+      <Outlet />
+    </div>
+  );
 };
 
 export default Layout;

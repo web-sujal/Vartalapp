@@ -1,12 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../Layout";
-import Home from "../pages/Home";
 import UserList from "../components/UserList";
 import UserDetails from "../components/UserDetails";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import PrivateRoutes from "./PrivateRoutes";
 import ForgotPassword from "../pages/ForgotPassword";
+import Profile from "../pages/Profile";
+import Settings from "../pages/Settings";
+import Calls from "../pages/Calls";
 
 const router = createBrowserRouter([
   {
@@ -14,16 +16,24 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "home",
-        element: <Home />,
-      },
-      {
         path: "users",
         element: <UserList />,
       },
       {
         path: "users/:id",
         element: <UserDetails />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "calls",
+        element: <Calls />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
       },
     ],
   },
