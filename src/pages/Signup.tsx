@@ -195,33 +195,9 @@ const Signup = () => {
                   </div>
                   {/* END CONFIRM PASSWORD */}
 
-                  {/* <!-- Checkbox --> */}
-                  <div className="flex items-center">
-                    <div className="flex">
-                      <input
-                        id="remember-me"
-                        name="remember-me"
-                        type="checkbox"
-                        className="pointer-events-none mt-0.5 shrink-0 rounded border-gray-200 text-blue-600 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:checked:border-blue-500 dark:checked:bg-blue-500 dark:focus:ring-offset-gray-800"
-                      />
-                    </div>
-                    <div className="ms-3">
-                      <label
-                        htmlFor="remember-me"
-                        className="text-sm dark:text-white"
-                      >
-                        I accept the{" "}
-                        <span className="cursor-pointer font-medium text-blue-600 decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                          Terms and Conditions
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                  {/* <!-- End Checkbox --> */}
-
                   <button
                     type="submit"
-                    className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-600 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                   >
                     Sign up
                   </button>
