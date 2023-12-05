@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Login = () => {
   return (
     <div className="flex min-h-screen items-center bg-rose-50 py-12 dark:bg-slate-900">
@@ -10,13 +12,13 @@ const Login = () => {
               </h1>
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 Don't have an account yet?
-                <a
+                <Link
+                  to="/signup"
                   className="font-medium text-blue-600 decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                  href="#"
                 >
                   {" "}
                   Sign up here
-                </a>
+                </Link>
               </p>
             </div>
 
@@ -112,12 +114,12 @@ const Login = () => {
                       >
                         Password
                       </label>
-                      <a
+                      <Link
+                        to="/forgotpassword"
                         className="mb-2 text-sm font-medium text-blue-600 decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                        href="#"
                       >
                         Forgot password?
-                      </a>
+                      </Link>
                     </div>
                     <div className="relative">
                       <input

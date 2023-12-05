@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Signup = () => {
   return (
     <div className="flex min-h-screen items-center bg-rose-50 py-12 dark:bg-slate-900">
@@ -10,13 +12,13 @@ const Signup = () => {
               </h1>
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 Already have an account?
-                <a
+                <Link
+                  to="/login"
                   className="font-medium text-blue-600 decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                  href="#"
                 >
                   {" "}
                   Sign in here
-                </a>
+                </Link>
               </p>
             </div>
 
@@ -209,7 +211,7 @@ const Signup = () => {
                         className="text-sm dark:text-white"
                       >
                         I accept the{" "}
-                        <span className="font-medium text-blue-600 decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                        <span className="cursor-pointer font-medium text-blue-600 decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                           Terms and Conditions
                         </span>
                       </label>
