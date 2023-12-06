@@ -9,8 +9,10 @@ const Layout = () => {
   // }
 
   return (
-    <div className="flex h-screen gap-1 bg-neutral-200 p-4 dark:bg-slate-900">
-      <Sidebar />
+    <div className="flex h-screen gap-1 bg-rose-100 p-6 dark:bg-zinc-800">
+      <div className="hidden md:flex">
+        <Sidebar />
+      </div>
       <Outlet />
     </div>
   );

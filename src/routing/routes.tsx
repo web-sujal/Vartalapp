@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../Layout";
-import UserList from "../components/UserList";
-import UserDetails from "../components/UserDetails";
+import ChatList from "../components/ChatList";
+import ChatDetails from "../components/ChatDetails";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import PrivateRoutes from "./PrivateRoutes";
@@ -16,12 +16,18 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "users",
-        element: <UserList />,
+        path: "chats",
+        element: <ChatList />,
+        children: [
+          {
+            path: ":id",
+            element: <ChatDetails />,
+          },
+        ],
       },
       {
-        path: "users/:id",
-        element: <UserDetails />,
+        path: "mchats/:id",
+        element: <ChatDetails />,
       },
       {
         path: "profile",
