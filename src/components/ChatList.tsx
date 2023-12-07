@@ -10,11 +10,12 @@ const ChatList = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="relative flex h-auto w-full items-center justify-between gap-1">
-      <div className="flex h-full w-full flex-col gap-1 lg:max-w-xs">
+    <div className="relative flex h-auto  w-full items-center justify-between gap-1">
+      {/* chatList */}
+      <div className="flex h-full max-h-full w-full flex-col gap-1 lg:max-w-xs">
         {/* search */}
         <div
-          className={`relative flex h-20 items-center justify-between gap-4 rounded-2xl bg-white px-6 dark:bg-gray-900 ${
+          className={`min-h-20 relative flex h-20 items-center justify-between gap-4 rounded-2xl bg-white px-6 dark:bg-gray-900 ${
             isSidebarOpen ? "blur-sm" : ""
           }`}
         >
@@ -39,24 +40,29 @@ const ChatList = () => {
 
         {/* users chat list */}
         <div
-          className={`flex h-full flex-col items-start justify-start gap-4 rounded-2xl bg-white p-4 dark:bg-gray-800 dark:text-white ${
+          className={`flex h-full max-h-full flex-col items-start justify-start gap-4 overflow-y-auto rounded-2xl bg-white p-4 dark:bg-gray-800 dark:text-white ${
             isSidebarOpen ? "blur-sm" : ""
           }`}
         >
           {/* CHAT LIST ITEM */}
-          <div className="w-full overflow-y-auto">
-            {mockChatList.map((chat) => (
-              <ChatListItem
-                displayName={chat.displayName}
-                unreadCount={chat.unreadCount}
-                text={chat.recentMessage.text}
-                timestamp={chat.recentMessage.timestamp}
-                isSeen={chat.recentMessage.isSeen}
-                id={chat.id}
-                key={chat.id}
-                photoURL={chat.photoURL}
-              />
-            ))}
+          <div className="w-full">
+            {mockChatList.map((chat, index) => {
+              const isLast = mockChatList.length - 1 === index;
+
+              return (
+                <ChatListItem
+                  displayName={chat.displayName}
+                  unreadCount={chat.unreadCount}
+                  text={chat.recentMessage.text}
+                  timestamp={chat.recentMessage.timestamp}
+                  isSeen={chat.recentMessage.isSeen}
+                  id={chat.id}
+                  key={chat.id}
+                  photoURL={chat.photoURL}
+                  isLast={isLast}
+                />
+              );
+            })}
           </div>
         </div>
 

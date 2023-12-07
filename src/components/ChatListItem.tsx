@@ -11,6 +11,7 @@ type ChatListItemProps = {
   isSeen: boolean;
   id: number;
   photoURL: string;
+  isLast: boolean;
 };
 
 const formatampm = (d: Date) => {
@@ -34,6 +35,7 @@ const ChatListItem = ({
   isSeen,
   id,
   photoURL,
+  isLast,
 }: ChatListItemProps) => {
   const isBelowLargeScreens = useMediaQuery({ maxWidth: 1024 });
 
@@ -96,7 +98,9 @@ const ChatListItem = ({
           </div>
 
           {/* divider */}
-          <hr className="mt-2 w-full border-gray-300 dark:border-gray-400" />
+          {!isLast && (
+            <hr className="hr-class mt-2 w-full border-gray-300 dark:border-gray-400" />
+          )}
         </div>
       </div>
     </NavLink>

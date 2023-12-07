@@ -58,40 +58,76 @@ export const mockChatList = [
       isSeen: false,
     },
   },
-  // {
-  //   id: 6,
-  //   photoURL:
-  //     "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   displayName: "Deepak",
-  //   unreadCount: 4,
-  //   recentMessage: {
-  //     text: "Ale anney bhaii",
-  //     timestamp: new Date(new Date().setHours(12, 0, 0, 0)),
-  //     isSeen: false,
-  //   },
-  // },
-  // {
-  //   id: 7,
-  //   photoURL:
-  //     "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   displayName: "Paras",
-  //   unreadCount: 0,
-  //   recentMessage: {
-  //     text: "Jaa paoge nai jaa paoge aaj...",
-  //     timestamp: new Date(new Date().setHours(12, 0, 0, 0)),
-  //     isSeen: true,
-  //   },
-  // },
-  // {
-  //   id: 8,
-  //   photoURL:
-  //     "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   displayName: "Honey",
-  //   unreadCount: 0,
-  //   recentMessage: {
-  //     text: "Sujii",
-  //     timestamp: new Date(new Date().setHours(12, 0, 0, 0)),
-  //     isSeen: true,
-  //   },
-  // },
+  {
+    id: 6,
+    photoURL:
+      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    displayName: "Deepak",
+    unreadCount: 4,
+    recentMessage: {
+      text: "Ale anney bhaii",
+      timestamp: new Date(new Date().setHours(12, 0, 0, 0)),
+      isSeen: false,
+    },
+  },
+  {
+    id: 7,
+    photoURL:
+      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    displayName: "Paras",
+    unreadCount: 0,
+    recentMessage: {
+      text: "Jaa paoge nai jaa paoge aaj...",
+      timestamp: new Date(new Date().setHours(12, 0, 0, 0)),
+      isSeen: true,
+    },
+  },
+  {
+    id: 8,
+    photoURL:
+      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    displayName: "Honey",
+    unreadCount: 0,
+    recentMessage: {
+      text: "Sujii",
+      timestamp: new Date(new Date().setHours(12, 0, 0, 0)),
+      isSeen: true,
+    },
+  },
+  {
+    id: 9,
+    photoURL:
+      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    displayName: "Deepak",
+    unreadCount: 4,
+    recentMessage: {
+      text: "Ale anney bhaii",
+      timestamp: new Date(new Date().setHours(12, 0, 0, 0)),
+      isSeen: false,
+    },
+  },
+  {
+    id: 10,
+    photoURL:
+      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    displayName: "Paras",
+    unreadCount: 0,
+    recentMessage: {
+      text: "Jaa paoge nai jaa paoge aaj...",
+      timestamp: new Date(new Date().setHours(12, 0, 0, 0)),
+      isSeen: true,
+    },
+  },
+  {
+    id: 11,
+    photoURL:
+      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    displayName: "Honey",
+    unreadCount: 0,
+    recentMessage: {
+      text: "Sujii",
+      timestamp: new Date(new Date().setHours(12, 0, 0, 0)),
+      isSeen: true,
+    },
+  },
 ];
