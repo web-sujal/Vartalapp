@@ -1,49 +1,12 @@
 import { IoSearchSharp } from "react-icons/io5";
 import { LuMenu } from "react-icons/lu";
-import { useMediaQuery } from "react-responsive";
 import { Outlet } from "react-router";
-import { NavLink } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-
-const users = [
-  {
-    displayName: "Shikha Ji",
-    email: "joshishikha@gmail.com",
-    password: "kuchbhi",
-    userID: 1,
-  },
-  {
-    displayName: "Abhishek Patel",
-    email: "patelabhishek@gmail.com",
-    password: "kuchbhi",
-    userID: 2,
-  },
-  {
-    displayName: "Kartik Patel",
-    email: "syoyo@gmail.com",
-    password: "kuchbhi",
-    userID: 3,
-  },
-  {
-    displayName: "Sumit Yadav",
-    email: "yadavsumit@gmail.com",
-    password: "kuchbhi",
-    userID: 4,
-  },
-  {
-    displayName: "Vivek Anany",
-    email: "nanni@gmail.com",
-    password: "kuchbhi",
-    userID: 5,
-  },
-];
-
-const navlinkStyles =
-  "cursor-pointer hover:-translate-y-1 duration-150 transition-all hover:text-rose-400";
+import ChatListItem from "./ChatListItem";
+import { mockChatList } from "../mockData/mockChatList";
 
 const ChatList = () => {
-  const isBelowLargeScreens = useMediaQuery({ maxWidth: 1024 });
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -55,7 +18,7 @@ const ChatList = () => {
             isSidebarOpen ? "blur-sm" : ""
           }`}
         >
-          {/* <!-- Navigation Toggle --> */}
+          {/* Navigation Toggle */}
           <button
             type="button"
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -68,10 +31,10 @@ const ChatList = () => {
           {/* search input */}
           <input
             type="text"
-            className="block w-full rounded-full border-gray-200 px-5 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-rose-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-800 dark:text-gray-400 dark:focus:ring-gray-600"
+            className="block w-full rounded-full border-gray-400 px-5 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-800 dark:text-gray-400 dark:focus:ring-gray-600"
             placeholder="Search"
           />
-          <IoSearchSharp className="transition-lift absolute bottom-5 right-10 mb-0.5 text-2xl text-gray-200 hover:text-rose-200 dark:text-gray-500" />
+          <IoSearchSharp className="transition-lift absolute bottom-5 right-10 mb-0.5 text-2xl text-gray-200 hover:text-rose-400 dark:text-gray-500" />
         </div>
 
         {/* users chat list */}
@@ -80,21 +43,21 @@ const ChatList = () => {
             isSidebarOpen ? "blur-sm" : ""
           }`}
         >
-          {users.map((user) => (
-            <NavLink
-              key={user.userID}
-              to={
-                isBelowLargeScreens
-                  ? `/mchats/${user.userID}`
-                  : `/chats/${user.userID}`
-              }
-              className={({ isActive }) =>
-                isActive ? `text-rose-500 ${navlinkStyles}` : navlinkStyles
-              }
-            >
-              {user.displayName}
-            </NavLink>
-          ))}
+          {/* CHAT LIST ITEM */}
+          <div className="w-full overflow-y-auto">
+            {mockChatList.map((chat) => (
+              <ChatListItem
+                displayName={chat.displayName}
+                unreadCount={chat.unreadCount}
+                text={chat.recentMessage.text}
+                timestamp={chat.recentMessage.timestamp}
+                isSeen={chat.recentMessage.isSeen}
+                id={chat.id}
+                key={chat.id}
+                photoURL={chat.photoURL}
+              />
+            ))}
+          </div>
         </div>
 
         {/* sidebar */}
