@@ -61,7 +61,7 @@ export const mockChatList = [
   {
     id: 6,
     photoURL:
-      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1682686580224-cd46ea1a6950?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     displayName: "Deepak",
     unreadCount: 4,
     recentMessage: {
@@ -73,7 +73,7 @@ export const mockChatList = [
   {
     id: 7,
     photoURL:
-      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1695653422715-991ec3a0db7a?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     displayName: "Paras",
     unreadCount: 0,
     recentMessage: {
@@ -85,7 +85,7 @@ export const mockChatList = [
   {
     id: 8,
     photoURL:
-      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1701207573531-f6cf32dc2e32?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     displayName: "Honey",
     unreadCount: 0,
     recentMessage: {
@@ -96,8 +96,7 @@ export const mockChatList = [
   },
   {
     id: 9,
-    photoURL:
-      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    photoURL: "",
     displayName: "Deepak",
     unreadCount: 4,
     recentMessage: {
@@ -108,8 +107,7 @@ export const mockChatList = [
   },
   {
     id: 10,
-    photoURL:
-      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    photoURL: "",
     displayName: "Paras",
     unreadCount: 0,
     recentMessage: {
@@ -121,7 +119,7 @@ export const mockChatList = [
   {
     id: 11,
     photoURL:
-      "https://images.unsplash.com/photo-1531860494978-9326a0388ef4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1701839640130-c294f367ffa5?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     displayName: "Honey",
     unreadCount: 0,
     recentMessage: {

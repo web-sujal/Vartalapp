@@ -5,6 +5,8 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
+import Avatar from "./Avatar";
+import { mockChatList } from "../mockData/mockChatList";
 
 type SidebarProps = {
   setIsSidebarOpen?: Dispatch<SetStateAction<boolean>>;
@@ -25,14 +27,10 @@ const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
     >
       {/* top */}
       <div className="mx-auto my-4 md:inline-block">
-        <img
-          className="inline-block h-10 w-10 border-spacing-2 cursor-pointer rounded-full object-cover ring-2 ring-rose-500 transition-all duration-150 hover:-translate-y-1"
-          src="https://img.freepik.com/free-photo/men-women-embrace-sunset-generative-ai_188544-12581.jpg?w=826&t=st=1701768698~exp=1701769298~hmac=98cf0da41a6c31de42fdbba2de89b58c1298a3e469843be399022e7e9542a1cf"
-          alt="profile picture"
+        <Avatar
+          photoURL={mockChatList[7].photoURL}
+          name={mockChatList[7].displayName}
         />
-        {/* <span className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-500 text-lg font-semibold leading-none text-white ring-2 ring-rose-500 transition-all duration-150 hover:-translate-y-1">
-          S
-        </span> */}
       </div>
 
       {/* mid */}

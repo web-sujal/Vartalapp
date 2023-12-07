@@ -2,6 +2,7 @@ import { useMediaQuery } from "react-responsive";
 import { NavLink } from "react-router-dom";
 // import { MdDone } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
+import Avatar from "./Avatar";
 
 type ChatListItemProps = {
   displayName: string;
@@ -49,19 +50,7 @@ const ChatListItem = ({
     >
       <div className="group  flex w-full items-center justify-between gap-2">
         {/* avatar */}
-        <div className="flex-shrink-0">
-          {photoURL.length !== 0 ? (
-            <img
-              className="inline-flex h-10 w-10 cursor-pointer rounded-full object-cover object-center"
-              src={photoURL}
-              alt="profile picture"
-            />
-          ) : (
-            <span className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-slate-700 text-lg font-semibold leading-none text-white">
-              {displayName[0]}
-            </span>
-          )}
-        </div>
+        <Avatar photoURL={photoURL} name={displayName} />
 
         {/* details */}
         <div className="flex flex-1 flex-col items-center justify-around overflow-hidden">
