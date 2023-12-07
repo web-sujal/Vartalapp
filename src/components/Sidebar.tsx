@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Avatar from "./Avatar";
 import { mockChatList } from "../mockData/mockChatList";
 
@@ -18,15 +18,38 @@ const iconStyles =
 
 const activeClassName = `text-rose-500 ${iconStyles} `;
 
+const toggleDarkClass = (isDarkMode: boolean) => {
+  const root = window.document.documentElement;
+  if (isDarkMode) {
+    root.classList.add("dark");
+  } else {
+    root.classList.remove("dark");
+  }
+};
+
 const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
   const [darkMode, setDarkMode] = useState(false);
 
   // toggle dark mode
   const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    const root = window.document.documentElement; //add 'dark class to html root element'
-    root.classList.toggle("dark");
+    setDarkMode((prevDarkMode) => {
+      const newDarkMode = !prevDarkMode;
+      localStorage.setItem("darkMode", newDarkMode.toString());
+      toggleDarkClass(newDarkMode);
+      return newDarkMode;
+    });
   };
+
+  useEffect(() => {
+    const mode = localStorage.getItem("darkMode") || false;
+    if (mode === "true") {
+      setDarkMode(true);
+      toggleDarkClass(true);
+    } else {
+      setDarkMode(false);
+      toggleDarkClass(false);
+    }
+  }, []);
 
   // event handlers
   const handleSignOut = () => {};
