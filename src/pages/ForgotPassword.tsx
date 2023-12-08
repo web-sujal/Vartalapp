@@ -1,6 +1,24 @@
 import { Link } from "react-router-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type FormData = {
+  email: string;
+};
 
 const ForgotPassword = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  // event handlers
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+    reset();
+  };
+
   return (
     <div className="flex min-h-screen items-center bg-rose-50 py-16 dark:bg-slate-900">
       <div className="mx-auto w-full max-w-md p-6">
@@ -24,7 +42,7 @@ const ForgotPassword = () => {
 
             <div className="mt-5">
               {/* <!-- Form --> */}
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid gap-y-4">
                   {/* <!-- Form Group --> */}
                   <div>
@@ -38,33 +56,22 @@ const ForgotPassword = () => {
                       <input
                         type="email"
                         id="email"
-                        name="email"
-                        className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
-                        required
+                        className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-rose-500 focus:ring-rose-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
                         aria-describedby="email-error"
+                        {...register("email", {
+                          required: true,
+                          pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                        })}
                       />
-
-                      {/* error svg */}
-                      <div className=" pointer-events-none absolute inset-y-0 end-0 flex items-center pe-3">
-                        <svg
-                          className="h-5 w-5 text-red-500"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
                     </div>
-                    <p
-                      className="mt-2 hidden text-xs text-red-600"
-                      id="email-error"
-                    >
-                      Please include a valid email address so we can get back to
-                      you
-                    </p>
+
+                    {/* invalid email error */}
+                    {errors.email && (
+                      <p className="mt-2 text-xs text-red-600" id="email-error">
+                        Please include a valid email address so we can get back
+                        to you
+                      </p>
+                    )}
                   </div>
                   {/* <!-- End Form Group --> */}
 

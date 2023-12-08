@@ -1,7 +1,38 @@
 import { MdAddPhotoAlternate } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+
+type FormData = {
+  email: string;
+  password: string;
+  confirm_password: string;
+};
 
 const Signup = () => {
+  const [file, setFile] = useState<File | string>("");
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  // event handlers
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+    console.log(file);
+
+    if (typeof file === "string") {
+      console.log("no file selected");
+    } else {
+      console.log(file.name);
+    }
+
+    reset();
+  };
+
   return (
     <div className="flex min-h-screen items-center bg-rose-50 py-12 dark:bg-slate-900">
       <div className="mx-auto w-full max-w-md p-6 pt-0">
@@ -24,6 +55,7 @@ const Signup = () => {
             </div>
 
             <div className="mt-5">
+              {/* sign up with google */}
               <button
                 type="button"
                 className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
@@ -60,7 +92,7 @@ const Signup = () => {
               </div>
 
               {/* <!-- Form --> */}
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid gap-y-4">
                   {/* EMAIL */}
                   <div>
@@ -74,35 +106,21 @@ const Signup = () => {
                       <input
                         type="email"
                         id="email"
-                        name="email"
                         className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
-                        required
                         aria-describedby="email-error"
+                        {...register("email", {
+                          required: true,
+                          pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                        })}
                       />
-
-                      {/* error svg */}
-                      <div className="pointer-events-none absolute inset-y-0 end-0 hidden items-center pe-3">
-                        <svg
-                          className="h-5 w-5 text-red-500"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
                     </div>
 
                     {/* Invalid Email Error */}
-                    <p
-                      className="mt-2 hidden text-xs text-red-600"
-                      id="email-error"
-                    >
-                      Please include a valid email address so we can get back to
-                      you
-                    </p>
+                    {errors.email && (
+                      <p className="mt-2 text-xs text-red-600" id="email-error">
+                        Please enter a valid email address
+                      </p>
+                    )}
                   </div>
                   {/* END EMAIL */}
 
@@ -120,34 +138,24 @@ const Signup = () => {
                       <input
                         type="password"
                         id="password"
-                        name="password"
                         className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
-                        required
                         aria-describedby="password-error"
+                        {...register("password", {
+                          required: true,
+                          minLength: 6,
+                        })}
                       />
-
-                      {/* error svg */}
-                      <div className="pointer-events-none absolute inset-y-0 end-0 hidden items-center pe-3">
-                        <svg
-                          className="h-5 w-5 text-red-500"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
                     </div>
 
                     {/* Invalid Password Error */}
-                    <p
-                      className="mt-2 hidden text-xs text-red-600"
-                      id="password-error"
-                    >
-                      6+ characters required
-                    </p>
+                    {errors.password && (
+                      <p
+                        className="mt-2 text-xs text-red-600"
+                        id="password-error"
+                      >
+                        A password of 6+ characters is required
+                      </p>
+                    )}
                   </div>
                   {/* END PASSWORD */}
 
@@ -155,7 +163,7 @@ const Signup = () => {
                   <div>
                     <div className="flex items-center justify-between">
                       <label
-                        htmlFor="confirm-password"
+                        htmlFor="confirm_password"
                         className="mb-2 block text-sm dark:text-white"
                       >
                         Confirm Password
@@ -164,56 +172,63 @@ const Signup = () => {
                     <div className="relative">
                       <input
                         type="password"
-                        id="confirm-password"
-                        name="confirm-password"
+                        id="confirm_password"
                         className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
-                        required
                         aria-describedby="password-error"
+                        {...register("confirm_password", {
+                          required: true,
+                          validate: (value: string) => {
+                            if (watch("password") != value) {
+                              return "Your passwords do no match";
+                            }
+                          },
+                        })}
                       />
-
-                      {/* error svg */}
-                      <div className="pointer-events-none absolute inset-y-0 end-0 hidden items-center pe-3">
-                        <svg
-                          className="h-5 w-5 text-red-500"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
                     </div>
 
                     {/* Invalid Password Error */}
-                    <p
-                      className="mt-2 hidden text-xs text-red-600"
-                      id="confirm-password-error"
-                    >
-                      Password does not match the password
-                    </p>
+                    {errors.confirm_password && (
+                      <p
+                        className="mt-2 text-xs text-red-600"
+                        id="password-error"
+                      >
+                        Passwords doesn't match
+                      </p>
+                    )}
                   </div>
                   {/* END CONFIRM PASSWORD */}
 
-                  {/* PASSWORD */}
+                  {/* File */}
                   <div className="flex items-center justify-start gap-4">
                     <label
                       htmlFor="file"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === " " || e.key === "Enter") {
+                          e.preventDefault();
+                          document.getElementById("file")?.click();
+                        }
+                      }}
                       className="transition-lift cursor-pointer text-4xl text-gray-700 dark:text-white"
+                      id="upload-profile-pic"
                     >
                       <MdAddPhotoAlternate />
                     </label>
                     <input
                       type="file"
                       id="file"
-                      name="file"
                       className="hidden"
-                      aria-label="upload profile pic"
+                      aria-describedby="upload-profile-pic"
+                      onChange={(e) =>
+                        e.target.files
+                          ? setFile(e.target.files[0])
+                          : setFile("")
+                      }
                     />
                     <label
                       htmlFor="file"
                       className="cursor-pointer tracking-wide transition-all duration-150 hover:underline hover:underline-offset-4 dark:text-gray-200"
+                      id="upload-profile-pic"
                     >
                       Upload your profile pic
                     </label>
