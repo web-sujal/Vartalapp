@@ -15,7 +15,7 @@ const ChatDetails = () => {
   return (
     <div className="flex h-full w-full flex-col ">
       {/* nav */}
-      <div className="mb-1 flex h-20 min-h-fit items-center justify-between gap-1 rounded-2xl bg-white px-4 py-2 dark:bg-gray-900 dark:text-white">
+      <div className="mb-1 flex h-20 min-h-fit items-center justify-between gap-1 rounded-2xl bg-white px-4 py-3.5 dark:bg-gray-900 dark:text-white">
         {/* avatar */}
         <div className="flex-shrink-0">
           <Avatar
@@ -67,7 +67,7 @@ const ChatDetails = () => {
       <div className="flex h-16 max-h-fit w-full flex-shrink-0 items-center justify-between gap-1 rounded-b-2xl bg-white px-4 dark:bg-gray-800 md:gap-2">
         <input
           type="text"
-          className="block w-full rounded-full border-gray-200 px-5 py-2 focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+          className="block w-full rounded-full border-gray-400 px-5 py-2 focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
           placeholder="type your message..."
         />
         <label
