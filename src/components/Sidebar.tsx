@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import Avatar from "./Avatar";
 import { mockChatList } from "../mockData/mockChatList";
 
@@ -8,6 +8,7 @@ import { TbMessage } from "react-icons/tb";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
+import { ThemeContext, ThemeContextType } from "../context/ThemeContext";
 
 type SidebarProps = {
   setIsSidebarOpen?: Dispatch<SetStateAction<boolean>>;
@@ -18,38 +19,10 @@ const iconStyles =
 
 const activeClassName = `text-rose-500 ${iconStyles} `;
 
-const toggleDarkClass = (isDarkMode: boolean) => {
-  const root = window.document.documentElement;
-  if (isDarkMode) {
-    root.classList.add("dark");
-  } else {
-    root.classList.remove("dark");
-  }
-};
-
 const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  // toggle dark mode
-  const toggleTheme = () => {
-    setDarkMode((prevDarkMode) => {
-      const newDarkMode = !prevDarkMode;
-      localStorage.setItem("darkMode", newDarkMode.toString());
-      toggleDarkClass(newDarkMode);
-      return newDarkMode;
-    });
-  };
-
-  useEffect(() => {
-    const mode = localStorage.getItem("darkMode") || false;
-    if (mode === "true") {
-      setDarkMode(true);
-      toggleDarkClass(true);
-    } else {
-      setDarkMode(false);
-      toggleDarkClass(false);
-    }
-  }, []);
+  const { isDarkMode, toggleTheme } = useContext(
+    ThemeContext,
+  ) as ThemeContextType;
 
   // event handlers
   const handleSignOut = () => {};
@@ -92,7 +65,7 @@ const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
         </NavLink>
 
         <button onClick={toggleTheme} aria-label="toggle dark mode">
-          {darkMode ? (
+          {isDarkMode ? (
             <MdDarkMode className={`${iconStyles}`} />
           ) : (
             <MdOutlineDarkMode className={`${iconStyles}`} />

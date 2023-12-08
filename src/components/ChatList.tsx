@@ -15,7 +15,7 @@ const ChatList = () => {
       <div className="flex h-full max-h-full w-full flex-col gap-1 lg:max-w-xs">
         {/* search */}
         <div
-          className={`min-h-20 relative flex h-20 items-center justify-between gap-4 rounded-2xl bg-sky-50 px-6 dark:bg-gray-900 ${
+          className={`min-h-20 relative flex h-20 items-center justify-between gap-4 rounded-2xl bg-white px-6 dark:bg-gray-900 lg:bg-sky-50 ${
             isSidebarOpen ? "blur-sm" : ""
           }`}
         >
@@ -32,7 +32,7 @@ const ChatList = () => {
           {/* search input */}
           <input
             type="text"
-            className="block w-full rounded-full border-gray-400 bg-sky-50 px-5 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-800 dark:text-gray-400 dark:focus:ring-gray-600"
+            className="block w-full rounded-full border-gray-400 bg-white px-5 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-800 dark:text-gray-400 dark:focus:ring-gray-600 lg:bg-sky-50"
             placeholder="Search"
           />
           <IoSearchSharp className="transition-lift absolute bottom-5 right-10 mb-0.5 text-2xl text-gray-200 hover:text-rose-400 dark:text-gray-500" />
@@ -40,7 +40,7 @@ const ChatList = () => {
 
         {/* users chat list */}
         <div
-          className={`flex h-full max-h-full flex-col items-start justify-start gap-4 overflow-y-auto rounded-2xl bg-sky-50 p-4 dark:bg-gray-800 dark:text-white
+          className={`flex h-full max-h-full flex-col items-start justify-start gap-4 overflow-y-auto rounded-2xl bg-white p-4 dark:bg-gray-800 dark:text-white lg:bg-sky-50
           [&::-webkit-scrollbar]:w-0 ${isSidebarOpen ? "blur-sm" : ""}`}
         >
           {/* CHAT LIST ITEM */}

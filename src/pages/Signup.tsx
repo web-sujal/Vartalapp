@@ -154,7 +154,7 @@ const Signup = () => {
                   <div>
                     <div className="flex items-center justify-between">
                       <label
-                        htmlFor="password"
+                        htmlFor="confirm-password"
                         className="mb-2 block text-sm dark:text-white"
                       >
                         Confirm Password
@@ -163,8 +163,8 @@ const Signup = () => {
                     <div className="relative">
                       <input
                         type="password"
-                        id="password"
-                        name="password"
+                        id="confirm-password"
+                        name="confirm-password"
                         className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
                         required
                         aria-describedby="password-error"
