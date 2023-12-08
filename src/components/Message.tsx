@@ -13,9 +13,9 @@ const Message = ({
     <div
       className={`${
         isCurrentuser
-          ? "ms-auto bg-rose-600"
+          ? "ms-auto bg-rose-600 text-white"
           : "me-auto bg-gray-200 text-black dark:bg-slate-600 dark:text-white "
-      } flex w-4/5 max-w-fit flex-col items-start justify-center rounded-3xl px-4 py-2 text-lg text-white shadow-sm`}
+      } flex w-4/5 max-w-fit flex-col items-start justify-center rounded-3xl px-4 py-2 text-lg shadow-sm`}
     >
       <div className="">{message}</div>
       <div

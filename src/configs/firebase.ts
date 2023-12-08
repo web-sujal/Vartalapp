@@ -12,3 +12,35 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+
+/*
+public
+src
+  components
+    Avatar.tsx
+    ChatDetails.tsx
+    ChatList.tsx
+    ChatListItem.tsx
+    Message.tsx
+    Sidebar.tsx
+  configs
+    firebase.ts
+  context
+    AuthContext.tsx
+    ThemeContext.tsx
+  mockData
+    mockChatList.ts
+    mockChatMessages.tsx
+  pages
+    ForgotPassword.tsx
+    Login.tsx
+    Profile.tsx
+    Settings.tsx
+    Signup.tsx
+  routing
+    PrivateRoutes.tsx
+    routes.tsx
+  index.tsx
+  Layout.tsx
+  main.tsx
+*/

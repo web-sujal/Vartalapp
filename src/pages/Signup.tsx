@@ -1,3 +1,4 @@
+import { MdAddPhotoAlternate } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
@@ -25,7 +26,7 @@ const Signup = () => {
             <div className="mt-5">
               <button
                 type="button"
-                className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
               >
                 <svg
                   className="h-auto w-4"
@@ -74,7 +75,7 @@ const Signup = () => {
                         type="email"
                         id="email"
                         name="email"
-                        className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+                        className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
                         required
                         aria-describedby="email-error"
                       />
@@ -120,7 +121,7 @@ const Signup = () => {
                         type="password"
                         id="password"
                         name="password"
-                        className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+                        className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
                         required
                         aria-describedby="password-error"
                       />
@@ -165,7 +166,7 @@ const Signup = () => {
                         type="password"
                         id="confirm-password"
                         name="confirm-password"
-                        className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+                        className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
                         required
                         aria-describedby="password-error"
                       />
@@ -195,9 +196,32 @@ const Signup = () => {
                   </div>
                   {/* END CONFIRM PASSWORD */}
 
+                  {/* PASSWORD */}
+                  <div className="flex items-center justify-start gap-4">
+                    <label
+                      htmlFor="file"
+                      className="transition-lift cursor-pointer text-4xl text-gray-700 dark:text-white"
+                    >
+                      <MdAddPhotoAlternate />
+                    </label>
+                    <input
+                      type="file"
+                      id="file"
+                      name="file"
+                      className="hidden"
+                      aria-label="upload profile pic"
+                    />
+                    <label
+                      htmlFor="file"
+                      className="cursor-pointer tracking-wide transition-all duration-150 hover:underline hover:underline-offset-4 dark:text-gray-200"
+                    >
+                      Upload your profile pic
+                    </label>
+                  </div>
+
                   <button
                     type="submit"
-                    className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-600 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-600 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                   >
                     Sign up
                   </button>
