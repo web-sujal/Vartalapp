@@ -1,26 +1,26 @@
-import { useLocation } from "react-router-dom";
-import { mockChatList } from "../mockData/mockChatList";
+import { useParams } from "react-router-dom";
 import Avatar from "./Avatar";
-import { HiOutlinePhone } from "react-icons/hi";
-import { FaVideo } from "react-icons/fa";
 import Message from "./Message";
+import { HiOutlinePhone } from "react-icons/hi";
+import { IoIosSend } from "react-icons/io";
+import { IoVideocamOutline } from "react-icons/io5";
+import { GrAttachment } from "react-icons/gr";
+import { mockChatList } from "../mockData/mockChatList";
+import { mockChatMessages } from "../mockData/mockChatMessages";
 
 const ChatDetails = () => {
-  const location = useLocation();
-  const currentPath = location.pathname;
-
-  const index = currentPath.lastIndexOf("/");
-  const id = Number(currentPath.slice(index + 1)) - 1;
+  const { id } = useParams();
+  const numId = Number(id) - 1;
 
   return (
-    <div className="flex h-full w-full flex-col gap-1">
+    <div className="flex h-full w-full flex-col ">
       {/* nav */}
-      <div className="flex h-20 items-center justify-between gap-1 rounded-2xl bg-white px-4 dark:bg-gray-900 dark:text-white">
+      <div className="mb-1 flex h-20 min-h-fit items-center justify-between gap-1 rounded-2xl bg-white px-4 py-2 dark:bg-gray-900 dark:text-white">
         {/* avatar */}
         <div className="flex-shrink-0">
           <Avatar
-            photoURL={mockChatList[id].photoURL}
-            name={mockChatList[id].displayName}
+            photoURL={mockChatList[numId].photoURL}
+            name={mockChatList[numId].displayName}
           />
         </div>
 
@@ -29,7 +29,7 @@ const ChatDetails = () => {
           <div className="justify center flex flex-col items-start gap-3">
             {/* name */}
             <span className="text-xl font-medium">
-              {mockChatList[id].displayName}
+              {mockChatList[numId].displayName}
             </span>
 
             {/* presence */}
@@ -37,13 +37,13 @@ const ChatDetails = () => {
           <div className="flex items-center justify-between gap-2">
             <button
               type="button"
-              className="inline-flex items-center gap-x-2 rounded-full border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm transition-all duration-150 hover:scale-110 hover:bg-gray-100 dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+              className="inline-flex items-center gap-x-2 rounded-full border border-gray-200 bg-white px-4 py-3 text-base font-medium text-gray-800 shadow-sm transition-all duration-150 hover:scale-110 hover:bg-gray-100 dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
             >
-              <FaVideo />
+              <IoVideocamOutline />
             </button>
             <button
               type="button"
-              className="inline-flex items-center gap-x-2 rounded-full border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm transition-all duration-150 hover:scale-110 hover:bg-gray-100 dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+              className="inline-flex items-center gap-x-2 rounded-full border border-gray-200 bg-white px-4 py-3 text-base font-medium text-gray-800 shadow-sm transition-all duration-150 hover:scale-110 hover:bg-gray-100 dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
             >
               <HiOutlinePhone />
             </button>
@@ -52,56 +52,37 @@ const ChatDetails = () => {
       </div>
 
       {/* chat deatails section */}
-      <div className="flex h-full max-h-full flex-col items-start justify-start gap-1 overflow-y-auto rounded-2xl bg-white p-4 dark:bg-gray-800 dark:text-white [&::-webkit-scrollbar]:w-0">
-        <Message
-          timestamp="12:37 AM"
-          isCurrentuser={true}
-          message="hello joshi ji"
+      <div className="flex h-full flex-col items-start justify-start gap-2 overflow-y-auto rounded-t-2xl bg-white p-4 dark:bg-gray-800 dark:text-white [&::-webkit-scrollbar]:w-0">
+        {mockChatMessages.map((chat, index) => (
+          <Message
+            key={index}
+            message={chat.message}
+            timestamp={chat.timestamp}
+            isCurrentuser={chat.isCurrentUser}
+          />
+        ))}
+      </div>
+
+      {/* input */}
+      <div className="flex h-16 max-h-fit w-full flex-shrink-0 items-center justify-between gap-1 rounded-b-2xl bg-white px-4 dark:bg-gray-800 md:gap-2">
+        <input
+          type="text"
+          className="block w-full rounded-full border-gray-200 px-5 py-2 focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+          placeholder="type your message..."
         />
-        <Message timestamp="12:37 AM" message="Ji btaiye" />
-        <Message
-          timestamp="12:37 AM"
-          isCurrentuser={true}
-          message="Kaise hain aap..."
-        />
-        <Message timestamp="12:37 AM" message="theek hun" />
-        {/* <Message timestamp="12:37 AM" message="aap sunao..." />
-        <Message
-          timestamp="12:37 AM"
-          isCurrentuser={true}
-          message="hum bhi badiya hai"
-        />
-        <Message timestamp="12:37 AM" message="ok" />
-        <Message
-          timestamp="12:37 AM"
-          isCurrentuser={true}
-          message="wise man say only fools rush in, and I can't help falling in love with you I wonder if I'm ever on her mind like, Probably not swear I've never seen a girl so fine"
-        />
-        <Message timestamp="12:37 AM" message="theek baa" />
-        <Message
-          timestamp="12:37 AM"
-          isCurrentuser={true}
-          message="hello joshi ji"
-        />
-        <Message timestamp="12:37 AM" message="Ji btaiye" />
-        <Message
-          timestamp="12:37 AM"
-          isCurrentuser={true}
-          message="Kaise hain aap..."
-        />
-        <Message timestamp="12:37 AM" message="theek baa" />
-        <Message timestamp="12:37 AM" message="aap sunao..." />
-        <Message
-          timestamp="12:37 AM"
-          isCurrentuser={true}
-          message="hum bhi badiya hai"
-        />
-        <Message timestamp="12:37 AM" message="ok" />
-        <Message
-          timestamp="12:37 AM"
-          message="wise man say only fools rush in, and I can't help falling in love with you I wonder if I'm ever on her mind like, Probably not swear I've never seen a girl so fine"
-        />
-        <Message timestamp="12:37 AM" message="theek baa" /> */}
+        <label
+          htmlFor="file"
+          className="cursor-pointer rounded-full bg-gray-200 p-2 text-center text-2xl font-medium text-gray-800 transition-all duration-150 hover:scale-95 hover:bg-gray-300 dark:bg-gray-800 dark:text-white"
+        >
+          <GrAttachment />
+        </label>
+        <input type="file" id="file" className="hidden" />
+        <button
+          type="submit"
+          className="cursor-pointer rounded-full bg-rose-500 p-2 text-center text-2xl font-medium text-white transition-all duration-150 hover:scale-95 hover:bg-rose-600"
+        >
+          <IoIosSend />
+        </button>
       </div>
     </div>
   );
