@@ -5,8 +5,12 @@ import { MdAddPhotoAlternate } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 // firebase imports
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db, storage } from "../configs/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
+import { auth, db, provider, storage } from "../configs/firebase";
 import { FirebaseError } from "firebase/app";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -118,6 +122,30 @@ const Signup = () => {
     createUser();
   };
 
+  // creating user with google sign in
+  const signInWithGoogle = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, provider);
+      const user = userCredential.user;
+
+      // creating user in firestore
+      try {
+        await setDoc(doc(db, "users", user.uid), {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          uid: user.uid,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+
+      navigate("/chats");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center bg-rose-50 py-12 dark:bg-slate-900">
       <div className="mx-auto w-full max-w-md p-6 pt-0">
@@ -144,6 +172,7 @@ const Signup = () => {
               {/* sign up with google */}
               <button
                 type="button"
+                onClick={signInWithGoogle}
                 className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
               >
                 <svg

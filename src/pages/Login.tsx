@@ -1,5 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, db, provider } from "../configs/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 type FormData = {
   email: string;
@@ -7,6 +10,7 @@ type FormData = {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,8 +20,42 @@ const Login = () => {
 
   // event handlers
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    reset();
+    const signin = async () => {
+      try {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+        reset();
+
+        navigate("/chats");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    signin();
+  };
+
+  // creating user with google sign in
+  const signInWithGoogle = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, provider);
+      const user = userCredential.user;
+
+      // creating user in firestore
+      try {
+        await setDoc(doc(db, "users", user.uid), {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          uid: user.uid,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+
+      navigate("/chats");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -45,6 +83,7 @@ const Login = () => {
               {/* sign in with google */}
               <button
                 type="button"
+                onClick={signInWithGoogle}
                 className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50  dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
               >
                 <svg
@@ -122,7 +161,7 @@ const Login = () => {
                       </label>
                       <Link
                         to="/forgotpassword"
-                        className="mb-2 text-sm font-medium text-rose-600 decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        className="mb-2 text-sm font-medium text-blue-600 decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                       >
                         Forgot password?
                       </Link>
