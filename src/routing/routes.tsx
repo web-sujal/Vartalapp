@@ -13,6 +13,25 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    // errorElement: <ErrorPage />,
+    children: [],
+  },
+
+  {
+    path: "login",
+    element: <Login />,
+  },
+  {
+    path: "signup",
+    element: <Signup />,
+  },
+  {
+    path: "forgotpassword",
+    element: <ForgotPassword />,
+  },
+
+  {
+    element: <PrivateRoutes />,
     children: [
       {
         path: "chats",
@@ -37,24 +56,6 @@ const router = createBrowserRouter([
         element: <Settings />,
       },
     ],
-  },
-
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    path: "forgotpassword",
-    element: <ForgotPassword />,
-  },
-
-  {
-    element: <PrivateRoutes />,
-    children: [{}],
   },
 ]);
 

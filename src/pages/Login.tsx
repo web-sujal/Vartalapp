@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
+
+// firebase imports
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, db, provider } from "../configs/firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { useState } from "react";
 import { FirebaseError } from "firebase/app";
 
 type FormData = {
