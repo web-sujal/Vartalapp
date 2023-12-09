@@ -255,7 +255,7 @@ const Signup = () => {
                     {/* Invalid Email Error */}
                     {errors.email && (
                       <p className="mt-2 text-xs text-red-600" id="email-error">
-                        Please enter a valid email address
+                        Please enter a valid email address.
                       </p>
                     )}
                   </div>
@@ -289,7 +289,7 @@ const Signup = () => {
                         className="mt-2 text-xs text-red-600"
                         id="password-error"
                       >
-                        password must be atleast 6 characters long
+                        Password must be at least 6 characters long.
                       </p>
                     )}
                   </div>
@@ -327,7 +327,7 @@ const Signup = () => {
                         className="mt-2 text-xs text-red-600"
                         id="password-error"
                       >
-                        Your passwords do no match
+                        Passwords do not match. Please try again.
                       </p>
                     )}
                   </div>

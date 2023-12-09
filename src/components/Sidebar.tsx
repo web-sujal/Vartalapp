@@ -1,14 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction, useContext } from "react";
 import Avatar from "./Avatar";
 import { mockChatList } from "../mockData/mockChatList";
+import { ThemeContext, ThemeContextType } from "../context/ThemeContext";
 
 // icons
 import { TbMessage } from "react-icons/tb";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
-import { ThemeContext, ThemeContextType } from "../context/ThemeContext";
+
+// firebase imports
 import { signOut } from "firebase/auth";
 import { auth } from "../configs/firebase";
 
@@ -22,6 +24,7 @@ const iconStyles =
 const activeClassName = `text-rose-500 ${iconStyles} `;
 
 const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
+  const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useContext(
     ThemeContext,
   ) as ThemeContextType;
@@ -30,6 +33,7 @@ const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
+      navigate("/login");
     } catch (error) {
       console.error(error);
     }

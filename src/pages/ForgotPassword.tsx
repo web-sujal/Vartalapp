@@ -94,9 +94,13 @@ const ForgotPassword = () => {
 
                     {/*  */}
                     {showMessage && (
-                      <p className="mt-2 text-xs text-red-600" id="email-error">
-                        An email with reset password link has been sent to your
-                        provided email
+                      <p
+                        className="mt-2 text-xs text-blue-600"
+                        id="email-error"
+                      >
+                        A password reset link has been sent to the email address
+                        you provided. Please check your inbox for further
+                        instructions.
                       </p>
                     )}
                   </div>

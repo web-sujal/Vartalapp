@@ -3,6 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, db, provider } from "../configs/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { useState } from "react";
+import { FirebaseError } from "firebase/app";
 
 type FormData = {
   email: string;
@@ -11,6 +13,7 @@ type FormData = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const [showError, setShowError] = useState(false);
   const {
     register,
     handleSubmit,
@@ -18,16 +21,25 @@ const Login = () => {
     reset,
   } = useForm<FormData>();
 
+  const errorTimeout = () => {
+    setShowError(true);
+    setTimeout(() => {
+      setShowError(false);
+    }, 5000);
+  };
+
   // event handlers
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const signin = async () => {
       try {
         await signInWithEmailAndPassword(auth, data.email, data.password);
         reset();
-
         navigate("/chats");
       } catch (error) {
         console.error(error);
+        if ((error as FirebaseError).code === "auth/invalid-credential") {
+          return errorTimeout();
+        }
       }
     };
 
@@ -144,7 +156,7 @@ const Login = () => {
                     {/* Invalid Email Error */}
                     {errors.email && (
                       <p className="mt-2 text-xs text-red-600" id="email-error">
-                        Please include a valid email address
+                        Please include a valid email address.
                       </p>
                     )}
                   </div>
@@ -176,7 +188,12 @@ const Login = () => {
                       />
                     </div>
 
-                    {/* wrong password error */}
+                    {/* invalid password error */}
+                    {showError && (
+                      <p className="mt-2 text-xs text-red-600" id="email-error">
+                        Invalid email or password. Please try again.
+                      </p>
+                    )}
                   </div>
                   {/* <!-- End Form Group --> */}
 
