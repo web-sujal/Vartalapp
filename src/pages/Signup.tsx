@@ -1,16 +1,27 @@
-import { MdAddPhotoAlternate } from "react-icons/md";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
+import { MdAddPhotoAlternate } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
+// firebase imports
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db, storage } from "../configs/firebase";
+import { FirebaseError } from "firebase/app";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 type FormData = {
+  displayName: string;
   email: string;
   password: string;
-  confirm_password: string;
+  confirmPassword: string;
 };
 
 const Signup = () => {
-  const [file, setFile] = useState<File | string>("");
+  const [file, setFile] = useState<File | null>(null);
+  const [showError, setShowError] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,18 +30,92 @@ const Signup = () => {
     formState: { errors },
   } = useForm<FormData>();
 
+  const errorTimeout = () => {
+    setShowError(true);
+    setTimeout(() => {
+      setShowError(false);
+    }, 5000);
+  };
+
   // event handlers
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    console.log(file);
-
-    if (typeof file === "string") {
-      console.log("no file selected");
-    } else {
-      console.log(file.name);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
     }
+  };
 
-    reset();
+  // creating user with firebase
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    const createUser = async () => {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          data.email,
+          data.confirmPassword,
+        );
+
+        // creating user in firestore
+        try {
+          await setDoc(doc(db, "users", userCredential.user.uid), {
+            name: data.displayName,
+            email: data.email,
+            photoURL: "",
+            uid: userCredential.user.uid,
+          });
+        } catch (error) {
+          console.error(error);
+        }
+
+        // uploading file
+        if (file) {
+          const storageRef = ref(storage, data.displayName);
+          const uploadTask = uploadBytesResumable(storageRef, file);
+
+          uploadTask.on(
+            "state_changed",
+            () => {},
+            (error) => {
+              console.error(error);
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then(
+                async (downloadURL) => {
+                  // updating user profile in auth
+                  try {
+                    await updateProfile(userCredential.user, {
+                      displayName: data.displayName,
+                      photoURL: downloadURL,
+                    });
+                  } catch (error) {
+                    console.error(error);
+                  }
+
+                  // updating user doc in firestore
+                  try {
+                    await updateDoc(doc(db, "users", userCredential.user.uid), {
+                      photoURL: downloadURL,
+                    });
+                  } catch (error) {
+                    console.error(error);
+                  }
+                },
+              );
+            },
+          );
+        }
+
+        reset();
+        navigate("/chats");
+      } catch (error) {
+        console.error(error);
+        const errorCode = (error as FirebaseError).code;
+        if (errorCode === "auth/email-already-in-use") {
+          errorTimeout();
+        }
+      }
+    };
+
+    createUser();
   };
 
   return (
@@ -38,6 +123,7 @@ const Signup = () => {
       <div className="mx-auto w-full max-w-md p-6 pt-0">
         <div className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <div className="p-4 sm:p-7">
+            {/* sign in here */}
             <div className="text-center">
               <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
                 Sign up
@@ -87,6 +173,7 @@ const Signup = () => {
                 Sign up with Google
               </button>
 
+              {/* or divider */}
               <div className="flex items-center py-3 text-xs uppercase text-gray-400 before:me-6 before:flex-[1_1_0%] before:border-t before:border-gray-200 after:ms-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">
                 Or
               </div>
@@ -94,6 +181,27 @@ const Signup = () => {
               {/* <!-- Form --> */}
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid gap-y-4">
+                  {/* displayName */}
+                  <div>
+                    <label
+                      htmlFor="displayName"
+                      className="mb-2 block text-sm dark:text-white"
+                    >
+                      Name
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        id="displayName"
+                        className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+                        aria-describedby="displayName-error"
+                        {...register("displayName", {
+                          required: true,
+                        })}
+                      />
+                    </div>
+                  </div>
+
                   {/* EMAIL */}
                   <div>
                     <label
@@ -122,7 +230,6 @@ const Signup = () => {
                       </p>
                     )}
                   </div>
-                  {/* END EMAIL */}
 
                   {/* PASSWORD */}
                   <div>
@@ -153,17 +260,16 @@ const Signup = () => {
                         className="mt-2 text-xs text-red-600"
                         id="password-error"
                       >
-                        A password of 6+ characters is required
+                        password must be atleast 6 characters long
                       </p>
                     )}
                   </div>
-                  {/* END PASSWORD */}
 
                   {/* CONFIRM PASSWORD */}
                   <div>
                     <div className="flex items-center justify-between">
                       <label
-                        htmlFor="confirm_password"
+                        htmlFor="confirmPassword"
                         className="mb-2 block text-sm dark:text-white"
                       >
                         Confirm Password
@@ -172,10 +278,10 @@ const Signup = () => {
                     <div className="relative">
                       <input
                         type="password"
-                        id="confirm_password"
+                        id="confirmPassword"
                         className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
                         aria-describedby="password-error"
-                        {...register("confirm_password", {
+                        {...register("confirmPassword", {
                           required: true,
                           validate: (value: string) => {
                             if (watch("password") != value) {
@@ -187,16 +293,15 @@ const Signup = () => {
                     </div>
 
                     {/* Invalid Password Error */}
-                    {errors.confirm_password && (
+                    {errors.confirmPassword && (
                       <p
                         className="mt-2 text-xs text-red-600"
                         id="password-error"
                       >
-                        Passwords doesn't match
+                        Your passwords do no match
                       </p>
                     )}
                   </div>
-                  {/* END CONFIRM PASSWORD */}
 
                   {/* File */}
                   <div className="flex items-center justify-start gap-4">
@@ -219,11 +324,7 @@ const Signup = () => {
                       id="file"
                       className="hidden"
                       aria-describedby="upload-profile-pic"
-                      onChange={(e) =>
-                        e.target.files
-                          ? setFile(e.target.files[0])
-                          : setFile("")
-                      }
+                      onChange={handleFileChange}
                     />
                     <label
                       htmlFor="file"
@@ -234,6 +335,17 @@ const Signup = () => {
                     </label>
                   </div>
 
+                  {/* email already in use error */}
+                  {showError && (
+                    <p
+                      className="mt-2 text-xs text-red-600"
+                      aria-label="email-already-in-use-error"
+                    >
+                      email already in use
+                    </p>
+                  )}
+
+                  {/* sign up */}
                   <button
                     type="submit"
                     className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-600 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
