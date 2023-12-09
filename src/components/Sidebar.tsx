@@ -9,6 +9,8 @@ import { MdOutlinePersonOutline } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 import { ThemeContext, ThemeContextType } from "../context/ThemeContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../configs/firebase";
 
 type SidebarProps = {
   setIsSidebarOpen?: Dispatch<SetStateAction<boolean>>;
@@ -25,7 +27,13 @@ const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
   ) as ThemeContextType;
 
   // event handlers
-  const handleSignOut = () => {};
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <nav

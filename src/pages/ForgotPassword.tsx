@@ -1,11 +1,16 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { auth } from "../configs/firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 type FormData = {
   email: string;
 };
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
+  const [showMessage, setShowMessage] = useState(false);
   const {
     register,
     handleSubmit,
@@ -14,9 +19,23 @@ const ForgotPassword = () => {
   } = useForm<FormData>();
 
   // event handlers
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    reset();
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      await sendPasswordResetEmail(auth, data.email);
+      messageTimeout();
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // message timer
+  const messageTimeout = () => {
+    setShowMessage(true);
+    setTimeout(() => {
+      setShowMessage(false);
+      navigate("/login");
+    }, 5000);
   };
 
   return (
@@ -70,6 +89,14 @@ const ForgotPassword = () => {
                       <p className="mt-2 text-xs text-red-600" id="email-error">
                         Please include a valid email address so we can get back
                         to you
+                      </p>
+                    )}
+
+                    {/*  */}
+                    {showMessage && (
+                      <p className="mt-2 text-xs text-red-600" id="email-error">
+                        An email with reset password link has been sent to your
+                        provided email
                       </p>
                     )}
                   </div>
