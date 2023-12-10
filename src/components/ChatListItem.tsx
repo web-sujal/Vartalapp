@@ -50,7 +50,7 @@ const ChatListItem = ({
     >
       <div className="group  flex w-full items-center justify-between gap-2">
         {/* avatar */}
-        <Avatar photoURL={photoURL} name={displayName} />
+        <Avatar photoURL={photoURL} displayName={displayName} />
 
         {/* details */}
         <div className="flex flex-1 flex-col items-center justify-around overflow-hidden">

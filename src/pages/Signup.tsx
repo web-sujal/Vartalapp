@@ -64,23 +64,16 @@ const Signup = () => {
       );
 
       // creating user in firestore
-      try {
-        await setDoc(doc(db, "users", userCredential.user.uid), {
-          name: data.displayName,
-          email: data.email,
-          photoURL: "",
-          uid: userCredential.user.uid,
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        displayName: data.displayName,
+        username: data.displayName.toLowerCase(),
+        email: data.email,
+        photoURL: "",
+        uid: userCredential.user.uid,
+      });
 
       // creating user chatList in firestore
-      try {
-        await setDoc(doc(db, "chatLists", userCredential.user.uid), {});
-      } catch (error) {
-        console.error(error);
-      }
+      await setDoc(doc(db, "chatLists", userCredential.user.uid), {});
 
       // uploading file and updating displayName in userProfile
       if (file) {
@@ -93,40 +86,26 @@ const Signup = () => {
           (error) => {
             console.error(error);
           },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(
-              async (downloadURL) => {
-                // updating user profile in auth
-                try {
-                  await updateProfile(userCredential.user, {
-                    displayName: data.displayName,
-                    photoURL: downloadURL,
-                  });
-                } catch (error) {
-                  console.error(error);
-                }
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-                // updating user doc in firestore
-                try {
-                  await updateDoc(doc(db, "users", userCredential.user.uid), {
-                    photoURL: downloadURL,
-                  });
-                } catch (error) {
-                  console.error(error);
-                }
-              },
-            );
+            // updating user profile in auth
+            await updateProfile(userCredential.user, {
+              displayName: data.displayName,
+              photoURL: downloadURL,
+            });
+
+            // updating user doc in firestore
+            await updateDoc(doc(db, "users", userCredential.user.uid), {
+              photoURL: downloadURL,
+            });
           },
         );
       } else {
         // updating user displayName in auth
-        try {
-          await updateProfile(userCredential.user, {
-            displayName: data.displayName,
-          });
-        } catch (error) {
-          console.error(error);
-        }
+        await updateProfile(userCredential.user, {
+          displayName: data.displayName,
+        });
       }
 
       reset();
@@ -147,16 +126,16 @@ const Signup = () => {
       const user = userCredential.user;
 
       // creating user in firestore
-      try {
-        await setDoc(doc(db, "users", user.uid), {
-          name: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-          uid: user.uid,
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      await setDoc(doc(db, "users", user.uid), {
+        displayName: user.displayName,
+        username: user.displayName?.toLowerCase(),
+        email: user.email,
+        photoURL: user.photoURL,
+        uid: user.uid,
+      });
+
+      // creating user chatList in firestore
+      await setDoc(doc(db, "chatLists", userCredential.user.uid), {});
 
       navigate("/chats");
     } catch (error) {

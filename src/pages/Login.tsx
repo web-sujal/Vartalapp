@@ -61,16 +61,16 @@ const Login = () => {
       const user = userCredential.user;
 
       // creating user in firestore
-      try {
-        await setDoc(doc(db, "users", user.uid), {
-          name: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-          uid: user.uid,
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      await setDoc(doc(db, "users", user.uid), {
+        displayName: user.displayName,
+        username: user.displayName?.toLowerCase(),
+        email: user.email,
+        photoURL: user.photoURL,
+        uid: user.uid,
+      });
+
+      // creating user chatList in firestore
+      await setDoc(doc(db, "chatLists", userCredential.user.uid), {});
 
       navigate("/chats");
     } catch (error) {

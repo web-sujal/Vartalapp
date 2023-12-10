@@ -6,7 +6,7 @@ import { ThemeContext, ThemeContextType } from "../context/ThemeContext";
 // icons
 import { TbMessage } from "react-icons/tb";
 import { MdOutlinePersonOutline } from "react-icons/md";
-import { IoSettingsOutline } from "react-icons/io5";
+// import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 
 // firebase imports
@@ -89,7 +89,7 @@ const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
 
       {/* bottom */}
       <div className="flex flex-col items-center justify-between gap-6 rounded-b-2xl bg-gray-700 p-4 text-3xl">
-        <NavLink
+        {/* <NavLink
           to="/settings"
           className={({ isActive }) =>
             isActive ? activeClassName : iconStyles
@@ -98,7 +98,7 @@ const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
           onClick={() => setIsSidebarOpen && setIsSidebarOpen(false)}
         >
           <IoSettingsOutline />
-        </NavLink>
+        </NavLink> */}
 
         <button onClick={handleSignOut} aria-label="logout">
           <MdLogout className={`${iconStyles}`} />

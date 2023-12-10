@@ -1,10 +1,10 @@
-import { IoSearchSharp } from "react-icons/io5";
-import { LuMenu } from "react-icons/lu";
 import { Outlet } from "react-router";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
 import ChatListItem from "./ChatListItem";
 import { mockChatList } from "../mockData/mockChatList";
+
+import Search from "./Search";
 
 const ChatList = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,29 +14,10 @@ const ChatList = () => {
       {/* chatList */}
       <div className="flex h-full max-h-full w-full flex-col md:gap-1 lg:max-w-xs">
         {/* search */}
-        <div
-          className={`min-h-20 relative flex h-20 items-center justify-between gap-4 border-b-2 border-gray-300 bg-white px-6 shadow-sm dark:border-none dark:bg-gray-900 md:rounded-2xl md:border-none lg:bg-sky-50 ${
-            isSidebarOpen ? "blur-sm" : ""
-          }`}
-        >
-          {/* Navigation Toggle */}
-          <button
-            type="button"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="inline-block cursor-pointer text-2xl hover:scale-90 hover:bg-gray-50 dark:border-gray-700 dark:text-white dark:hover:bg-white/10 dark:focus:outline-none md:hidden"
-            aria-label="Toggle navigation"
-          >
-            <LuMenu />
-          </button>
-
-          {/* search input */}
-          <input
-            type="text"
-            className="block w-full rounded-full border-gray-400 bg-white px-5 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-800 dark:text-gray-400 dark:focus:ring-gray-600 lg:bg-sky-50"
-            placeholder="Search"
-          />
-          <IoSearchSharp className="transition-lift absolute bottom-5 right-10 mb-0.5 text-2xl text-gray-200 hover:text-rose-400 dark:text-gray-500" />
-        </div>
+        <Search
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
 
         {/* users chat list */}
         <div

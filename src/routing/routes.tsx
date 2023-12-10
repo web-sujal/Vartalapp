@@ -7,7 +7,7 @@ import Signup from "../pages/Signup";
 import PrivateRoutes from "./PrivateRoutes";
 import ForgotPassword from "../pages/ForgotPassword";
 import Profile from "../pages/Profile";
-import Settings from "../pages/Settings";
+// import Settings from "../pages/Settings";
 
 const router = createBrowserRouter([
   {
@@ -51,10 +51,10 @@ const router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
-      {
-        path: "settings",
-        element: <Settings />,
-      },
+      // {
+      //   path: "settings",
+      //   element: <Settings />,
+      // },
     ],
   },
 ]);
