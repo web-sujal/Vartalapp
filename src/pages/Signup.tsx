@@ -24,7 +24,7 @@ type FormData = {
 };
 
 const Signup = () => {
-  const { user } = useContext(AuthContext) as AuthContextType;
+  const { currentUser } = useContext(AuthContext) as AuthContextType;
   const [file, setFile] = useState<File | null>(null);
   const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const Signup = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  if (user) {
+  if (currentUser) {
     return <Navigate to="/chats" />;
   }
 

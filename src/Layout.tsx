@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext, AuthContextType } from "./context/AuthContext";
 
 const Layout = () => {
-  const { user, loading } = useContext(AuthContext) as AuthContextType;
+  const { currentUser, loading } = useContext(AuthContext) as AuthContextType;
   const location = useLocation();
 
   if (location.pathname === "/") {
@@ -22,7 +22,7 @@ const Layout = () => {
           <h2 className="text-2xl font-medium text-rose-600">Loading...</h2>
         </div>
       );
-    } else if (user) {
+    } else if (currentUser) {
       return <Navigate to="/chats" />;
     } else {
       return <Navigate to="/login" />;
@@ -30,7 +30,7 @@ const Layout = () => {
   }
 
   return (
-    <div className="flex h-screen max-h-[100svh] gap-1 bg-neutral-800 dark:bg-neutral-800 md:p-6">
+    <div className="flex h-screen max-h-full gap-1 bg-neutral-800 dark:bg-neutral-800 md:p-6">
       <div className="hidden md:flex">
         <Sidebar />
       </div>

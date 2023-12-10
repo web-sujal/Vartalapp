@@ -4,7 +4,7 @@ import Layout from "../Layout";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoutes = () => {
-  const { user, loading } = useContext(AuthContext) as AuthContextType;
+  const { currentUser, loading } = useContext(AuthContext) as AuthContextType;
 
   if (loading) {
     return (
@@ -22,7 +22,7 @@ const PrivateRoutes = () => {
     );
   }
 
-  return user ? <Layout /> : <Navigate to="/login" />;
+  return currentUser ? <Layout /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoutes;

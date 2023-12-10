@@ -15,7 +15,7 @@ type FormData = {
 };
 
 const Login = () => {
-  const { user } = useContext(AuthContext) as AuthContextType;
+  const { currentUser } = useContext(AuthContext) as AuthContextType;
   const navigate = useNavigate();
   const [showError, setShowError] = useState(false);
   const {
@@ -25,7 +25,7 @@ const Login = () => {
     reset,
   } = useForm<FormData>();
 
-  if (user) {
+  if (currentUser) {
     return <Navigate to="/chats" />;
   }
 
