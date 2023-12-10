@@ -30,7 +30,7 @@ const Layout = () => {
   }
 
   return (
-    <div className="flex h-screen max-h-[-webkit-fill-available] gap-1 bg-neutral-800 dark:bg-neutral-800 md:p-6">
+    <div className="flex h-screen max-h-[100svh] gap-1 bg-neutral-800 dark:bg-neutral-800 md:p-6">
       <div className="hidden md:flex">
         <Sidebar />
       </div>
