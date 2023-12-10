@@ -1,7 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction, useContext } from "react";
 import Avatar from "./Avatar";
-import { mockChatList } from "../mockData/mockChatList";
 import { ThemeContext, ThemeContextType } from "../context/ThemeContext";
 
 // icons
@@ -13,6 +12,7 @@ import { MdLogout, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 // firebase imports
 import { signOut } from "firebase/auth";
 import { auth } from "../configs/firebase";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 
 type SidebarProps = {
   setIsSidebarOpen?: Dispatch<SetStateAction<boolean>>;
@@ -25,9 +25,11 @@ const activeClassName = `text-rose-500 ${iconStyles} `;
 
 const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
   const navigate = useNavigate();
+
   const { isDarkMode, toggleTheme } = useContext(
     ThemeContext,
   ) as ThemeContextType;
+  const { currentUser } = useContext(AuthContext) as AuthContextType;
 
   // event handlers
   const handleSignOut = async () => {
@@ -47,8 +49,8 @@ const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
       {/* top */}
       <div className="mx-auto my-4 md:inline-block">
         <Avatar
-          photoURL={mockChatList[6].photoURL}
-          name={mockChatList[6].displayName}
+          photoURL={currentUser && currentUser.photoURL}
+          displayName={currentUser && currentUser.displayName}
         />
       </div>
 

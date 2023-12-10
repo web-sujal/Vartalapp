@@ -55,77 +55,89 @@ const Signup = () => {
   };
 
   // creating user with firebase
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    const createUser = async () => {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          data.email,
-          data.confirmPassword,
-        );
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.confirmPassword,
+      );
 
-        // creating user in firestore
+      // creating user in firestore
+      try {
+        await setDoc(doc(db, "users", userCredential.user.uid), {
+          name: data.displayName,
+          email: data.email,
+          photoURL: "",
+          uid: userCredential.user.uid,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+
+      // creating user chatList in firestore
+      try {
+        await setDoc(doc(db, "chatLists", userCredential.user.uid), {});
+      } catch (error) {
+        console.error(error);
+      }
+
+      // uploading file and updating displayName in userProfile
+      if (file) {
+        const storageRef = ref(storage, data.email);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+          "state_changed",
+          () => {},
+          (error) => {
+            console.error(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(
+              async (downloadURL) => {
+                // updating user profile in auth
+                try {
+                  await updateProfile(userCredential.user, {
+                    displayName: data.displayName,
+                    photoURL: downloadURL,
+                  });
+                } catch (error) {
+                  console.error(error);
+                }
+
+                // updating user doc in firestore
+                try {
+                  await updateDoc(doc(db, "users", userCredential.user.uid), {
+                    photoURL: downloadURL,
+                  });
+                } catch (error) {
+                  console.error(error);
+                }
+              },
+            );
+          },
+        );
+      } else {
+        // updating user displayName in auth
         try {
-          await setDoc(doc(db, "users", userCredential.user.uid), {
-            name: data.displayName,
-            email: data.email,
-            photoURL: "",
-            uid: userCredential.user.uid,
+          await updateProfile(userCredential.user, {
+            displayName: data.displayName,
           });
         } catch (error) {
           console.error(error);
         }
-
-        // uploading file
-        if (file) {
-          const storageRef = ref(storage, data.displayName);
-          const uploadTask = uploadBytesResumable(storageRef, file);
-
-          uploadTask.on(
-            "state_changed",
-            () => {},
-            (error) => {
-              console.error(error);
-            },
-            () => {
-              getDownloadURL(uploadTask.snapshot.ref).then(
-                async (downloadURL) => {
-                  // updating user profile in auth
-                  try {
-                    await updateProfile(userCredential.user, {
-                      displayName: data.displayName,
-                      photoURL: downloadURL,
-                    });
-                  } catch (error) {
-                    console.error(error);
-                  }
-
-                  // updating user doc in firestore
-                  try {
-                    await updateDoc(doc(db, "users", userCredential.user.uid), {
-                      photoURL: downloadURL,
-                    });
-                  } catch (error) {
-                    console.error(error);
-                  }
-                },
-              );
-            },
-          );
-        }
-
-        reset();
-        navigate("/chats");
-      } catch (error) {
-        console.error(error);
-        const errorCode = (error as FirebaseError).code;
-        if (errorCode === "auth/email-already-in-use") {
-          errorTimeout();
-        }
       }
-    };
 
-    createUser();
+      reset();
+      navigate("/chats");
+    } catch (error) {
+      console.error(error);
+      const errorCode = (error as FirebaseError).code;
+      if (errorCode === "auth/email-already-in-use") {
+        errorTimeout();
+      }
+    }
   };
 
   // creating user with google sign in
