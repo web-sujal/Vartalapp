@@ -10,12 +10,12 @@ const ChatList = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="relative flex h-auto w-full items-center justify-between gap-1">
+    <div className="relative flex h-auto w-full items-center justify-between md:gap-1">
       {/* chatList */}
-      <div className="flex h-full max-h-full w-full flex-col gap-1 lg:max-w-xs">
+      <div className="flex h-full max-h-full w-full flex-col md:gap-1 lg:max-w-xs">
         {/* search */}
         <div
-          className={`min-h-20 relative flex h-20 items-center justify-between gap-4 rounded-2xl bg-white px-6 dark:bg-gray-900 lg:bg-sky-50 ${
+          className={`min-h-20 relative flex h-20 items-center justify-between gap-4 border-b-2 border-gray-300 bg-white px-6 shadow-sm dark:border-none dark:bg-gray-900 md:rounded-2xl md:border-none lg:bg-sky-50 ${
             isSidebarOpen ? "blur-sm" : ""
           }`}
         >
@@ -40,7 +40,7 @@ const ChatList = () => {
 
         {/* users chat list */}
         <div
-          className={`flex h-full max-h-full flex-col items-start justify-start gap-4 overflow-y-auto rounded-2xl bg-white p-4 dark:bg-gray-800 dark:text-white lg:bg-sky-50
+          className={`flex h-full max-h-full flex-col items-start justify-start gap-4 overflow-y-auto bg-white p-4 dark:bg-gray-800 dark:text-white md:rounded-2xl lg:bg-sky-50
           [&::-webkit-scrollbar]:w-0 ${isSidebarOpen ? "blur-sm" : ""}`}
         >
           {/* CHAT LIST ITEM */}

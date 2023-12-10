@@ -15,7 +15,7 @@ const ChatDetails = () => {
   return (
     <div className="flex h-full w-full flex-col ">
       {/* nav */}
-      <div className="mb-1 flex h-20 min-h-fit items-center justify-between gap-1 rounded-2xl bg-white px-4 py-3.5 dark:bg-gray-900 dark:text-white">
+      <div className="flex h-20 min-h-fit items-center justify-between gap-1 border-b-2 border-gray-200 bg-white px-4 py-3.5 dark:border-none dark:bg-gray-900 dark:text-white md:mb-1 md:rounded-2xl md:border-none">
         {/* avatar */}
         <div className="flex-shrink-0">
           <Avatar
@@ -52,7 +52,7 @@ const ChatDetails = () => {
       </div>
 
       {/* chat deatails section */}
-      <div className="flex h-full flex-col items-start justify-start gap-2 overflow-y-auto rounded-t-2xl bg-white p-4 dark:bg-gray-800 dark:text-white [&::-webkit-scrollbar]:w-0">
+      <div className="flex h-full flex-col items-start justify-start gap-2 overflow-y-auto bg-white p-4 dark:bg-gray-800 dark:text-white md:rounded-t-2xl [&::-webkit-scrollbar]:w-0">
         {mockChatMessages.map((chat, index) => (
           <Message
             key={index}
@@ -64,7 +64,7 @@ const ChatDetails = () => {
       </div>
 
       {/* input */}
-      <div className="flex h-16 max-h-fit w-full flex-shrink-0 items-center justify-between gap-1 rounded-b-2xl bg-white px-4 dark:bg-gray-800 md:gap-2">
+      <div className="flex h-16 max-h-fit w-full flex-shrink-0 items-center justify-between gap-1 bg-white px-4 dark:bg-gray-800 md:gap-2 md:rounded-b-2xl">
         <input
           type="text"
           className="block w-full rounded-full border-gray-400 px-5 py-2 focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"

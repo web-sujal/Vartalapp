@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 // firebase imports
@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, db, provider } from "../configs/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 
 type FormData = {
   email: string;
@@ -14,6 +15,7 @@ type FormData = {
 };
 
 const Login = () => {
+  const { user } = useContext(AuthContext) as AuthContextType;
   const navigate = useNavigate();
   const [showError, setShowError] = useState(false);
   const {
@@ -22,6 +24,10 @@ const Login = () => {
     formState: { errors },
     reset,
   } = useForm<FormData>();
+
+  if (user) {
+    return <Navigate to="/chats" />;
+  }
 
   const errorTimeout = () => {
     setShowError(true);

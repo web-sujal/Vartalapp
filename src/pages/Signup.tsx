@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ import { auth, db, provider, storage } from "../configs/firebase";
 import { FirebaseError } from "firebase/app";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 
 type FormData = {
   displayName: string;
@@ -23,6 +24,7 @@ type FormData = {
 };
 
 const Signup = () => {
+  const { user } = useContext(AuthContext) as AuthContextType;
   const [file, setFile] = useState<File | null>(null);
   const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
@@ -33,6 +35,10 @@ const Signup = () => {
     reset,
     formState: { errors },
   } = useForm<FormData>();
+
+  if (user) {
+    return <Navigate to="/chats" />;
+  }
 
   const errorTimeout = () => {
     setShowError(true);
