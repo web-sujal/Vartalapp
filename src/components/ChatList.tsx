@@ -62,24 +62,26 @@ const ChatList = () => {
           {/* CHAT LIST ITEM */}
           <div className="w-full">
             {chats &&
-              Object.entries(chats).map((chat: ChatsType, index: number) => {
-                const isLast = mockChatList.length - 1 === index;
-                console.log("chats: ", chats);
-                console.log(chat[1].userInfo);
-                console.log(chat[1].lastMessage.message);
+              Object.entries(chats)
+                .sort((a, b) => b[1].date - a[1].date)
+                .map((chat: ChatsType, index: number) => {
+                  const isLast = mockChatList.length - 1 === index;
+                  console.log("chats: ", chats);
+                  console.log(chat[1].userInfo);
+                  console.log(chat[1].lastMessage.message);
 
-                return (
-                  <ChatListItem
-                    displayName={chat[1].userInfo.displayName}
-                    user={chat[1].userInfo}
-                    id={chat[0]}
-                    key={chat[0]}
-                    lastMessage={chat[1].lastMessage.message}
-                    photoURL={chat[1].userInfo.photoURL}
-                    isLast={isLast}
-                  />
-                );
-              })}
+                  return (
+                    <ChatListItem
+                      displayName={chat[1].userInfo.displayName}
+                      user={chat[1].userInfo}
+                      id={chat[0]}
+                      key={chat[0]}
+                      lastMessage={chat[1].lastMessage.message}
+                      photoURL={chat[1].userInfo.photoURL}
+                      isLast={isLast}
+                    />
+                  );
+                })}
           </div>
         </div>
 
