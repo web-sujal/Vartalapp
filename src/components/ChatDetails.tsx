@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import Avatar from "./Avatar";
 import Message from "./Message";
 import { HiOutlinePhone } from "react-icons/hi";
@@ -7,10 +6,11 @@ import { IoVideocamOutline } from "react-icons/io5";
 import { GrAttachment } from "react-icons/gr";
 import { mockChatList } from "../mockData/mockChatList";
 import { mockChatMessages } from "../mockData/mockChatMessages";
+import { useContext } from "react";
+import { ChatContext } from "../context/ChatContext";
 
 const ChatDetails = () => {
-  const { id } = useParams();
-  const numId = Number(id) - 1;
+  const { state } = useContext(ChatContext);
 
   return (
     <div className="flex h-full w-full flex-col ">
@@ -19,8 +19,8 @@ const ChatDetails = () => {
         {/* avatar */}
         <div className="flex-shrink-0">
           <Avatar
-            photoURL={mockChatList[numId].photoURL}
-            name={mockChatList[numId].displayName}
+            photoURL={state.user && state.user.photoURL}
+            displayName={state.user && state.user.displayName}
           />
         </div>
 
@@ -29,7 +29,7 @@ const ChatDetails = () => {
           <div className="justify center flex flex-col items-start gap-3">
             {/* name */}
             <span className="text-xl font-medium">
-              {mockChatList[numId].displayName}
+              {state.user && state.user.displayName}
             </span>
 
             {/* presence */}

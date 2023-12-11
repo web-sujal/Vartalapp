@@ -1,6 +1,6 @@
 import { IoSearchSharp } from "react-icons/io5";
 import { LuMenu } from "react-icons/lu";
-import { Dispatch, useContext, useState } from "react";
+import { Dispatch, useContext, useEffect, useState } from "react";
 
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 import {
@@ -67,6 +67,11 @@ const Search = ({ isSidebarOpen, setIsSidebarOpen }: SearchProps) => {
       errorTimeout();
     }
   };
+
+  // subscribing to search
+  useEffect(() => {
+    handleSearch();
+  }, [username]);
 
   //
   const handleSelect = async (user: UserType) => {

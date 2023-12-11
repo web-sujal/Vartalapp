@@ -1,13 +1,44 @@
 import { Outlet } from "react-router";
 import Sidebar from "./Sidebar";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ChatListItem from "./ChatListItem";
 import { mockChatList } from "../mockData/mockChatList";
 
 import Search from "./Search";
+import { DocumentData, Unsubscribe, doc, onSnapshot } from "firebase/firestore";
+import { db } from "../configs/firebase";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
+
+type UserInfoType = {
+  displayName: string;
+  uid: string;
+  photoURL: string;
+};
+
+type UserInfoObject = {
+  userInfo: UserInfoType;
+};
+
+type ChatsType = [id: string, userInfo: UserInfoObject];
 
 const ChatList = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [chats, setChats] = useState<DocumentData | undefined>([]);
+
+  const { currentUser } = useContext(AuthContext) as AuthContextType;
+
+  useEffect(() => {
+    let unsub: Unsubscribe;
+    if (currentUser) {
+      unsub = onSnapshot(doc(db, "chatLists", currentUser.uid), (doc) => {
+        setChats(doc.data());
+      });
+    }
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
   return (
     <div className="relative flex h-auto w-full items-center justify-between md:gap-1">
@@ -26,23 +57,21 @@ const ChatList = () => {
         >
           {/* CHAT LIST ITEM */}
           <div className="w-full">
-            {mockChatList.map((chat, index) => {
-              const isLast = mockChatList.length - 1 === index;
+            {chats &&
+              Object.entries(chats).map((chat: ChatsType, index: number) => {
+                const isLast = mockChatList.length - 1 === index;
 
-              return (
-                <ChatListItem
-                  displayName={chat.displayName}
-                  unreadCount={chat.unreadCount}
-                  text={chat.recentMessage.text}
-                  timestamp={chat.recentMessage.timestamp}
-                  isSeen={chat.recentMessage.isSeen}
-                  id={chat.id}
-                  key={chat.id}
-                  photoURL={chat.photoURL}
-                  isLast={isLast}
-                />
-              );
-            })}
+                return (
+                  <ChatListItem
+                    displayName={chat[1].userInfo.displayName}
+                    user={chat[1].userInfo}
+                    id={chat[0]}
+                    key={chat[0]}
+                    photoURL={chat[1].userInfo.photoURL}
+                    isLast={isLast}
+                  />
+                );
+              })}
           </div>
         </div>
 
