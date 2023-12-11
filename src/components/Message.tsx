@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
-import { formatampm } from "./ChatListItem";
-import { Timestamp } from "firebase/firestore";
+// import { formatampm } from "./ChatListItem";
+// import { Timestamp } from "firebase/firestore";
 
 type MessageProps = {
   message: string;
@@ -10,11 +10,17 @@ type MessageProps = {
   senderId: string;
 };
 
-const Message = ({ message, img, timestamp, senderId }: MessageProps) => {
+const Message = ({ message, img, senderId }: MessageProps) => {
   const { currentUser } = useContext(AuthContext) as AuthContextType;
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
 
   return (
     <div
+      ref={ref}
       className={`${
         currentUser && currentUser.uid === senderId
           ? "ms-auto items-end"
