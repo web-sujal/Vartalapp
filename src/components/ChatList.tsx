@@ -9,14 +9,18 @@ import { DocumentData, Unsubscribe, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../configs/firebase";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 
-type UserInfoType = {
+export type UserInfoType = {
   displayName: string;
   uid: string;
   photoURL: string;
+  lastMessage: string;
 };
 
 type UserInfoObject = {
   userInfo: UserInfoType;
+  lastMessage: {
+    message: string;
+  };
 };
 
 type ChatsType = [id: string, userInfo: UserInfoObject];
@@ -60,6 +64,9 @@ const ChatList = () => {
             {chats &&
               Object.entries(chats).map((chat: ChatsType, index: number) => {
                 const isLast = mockChatList.length - 1 === index;
+                console.log("chats: ", chats);
+                console.log(chat[1].userInfo);
+                console.log(chat[1].lastMessage.message);
 
                 return (
                   <ChatListItem
@@ -67,6 +74,7 @@ const ChatList = () => {
                     user={chat[1].userInfo}
                     id={chat[0]}
                     key={chat[0]}
+                    lastMessage={chat[1].lastMessage.message}
                     photoURL={chat[1].userInfo.photoURL}
                     isLast={isLast}
                   />

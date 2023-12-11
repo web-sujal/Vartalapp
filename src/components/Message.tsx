@@ -1,31 +1,50 @@
+import { useContext } from "react";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
+import { formatampm } from "./ChatListItem";
+import { Timestamp } from "firebase/firestore";
+
 type MessageProps = {
-  isCurrentuser?: boolean;
   message: string;
   timestamp: string;
+  img?: string;
+  senderId: string;
 };
 
-const Message = ({
-  isCurrentuser = false,
-  message,
-  timestamp,
-}: MessageProps) => {
+const Message = ({ message, img, timestamp, senderId }: MessageProps) => {
+  const { currentUser } = useContext(AuthContext) as AuthContextType;
+
   return (
     <div
       className={`${
-        isCurrentuser
-          ? "ms-auto bg-rose-600 text-white"
-          : "me-auto bg-gray-200 text-black dark:bg-slate-600 dark:text-white "
-      } flex w-4/5 max-w-fit flex-col items-start justify-center rounded-3xl px-4 py-2 text-lg shadow-sm`}
+        currentUser && currentUser.uid === senderId
+          ? "ms-auto items-end"
+          : "me-auto items-start"
+      } flex w-4/5 max-w-fit flex-col justify-center shadow-sm`}
     >
-      <div className="">{message}</div>
+      {img && (
+        <img
+          src={img}
+          alt="image"
+          className="mb-2 h-60 cursor-pointer rounded-md bg-white object-cover"
+        />
+      )}
       <div
         className={`${
-          isCurrentuser
-            ? "text-gray-50 dark:text-white/90"
-            : " text-gray-700 dark:text-gray-300"
-        } w-full text-end text-xs font-light`}
+          currentUser && currentUser.uid === senderId
+            ? "ms-auto bg-rose-600 text-white"
+            : "me-auto bg-gray-200 text-black dark:bg-slate-600 dark:text-white "
+        } rounded-3xl px-4 py-2 text-lg`}
       >
-        {timestamp}
+        <div className="">{message}</div>
+        <div
+          className={`${
+            currentUser && currentUser.uid === senderId
+              ? "text-gray-50 dark:text-white/90"
+              : " text-gray-700 dark:text-gray-300"
+          } w-full text-end text-xs font-light`}
+        >
+          {/* {formatampm(timestamp)} */} 12:00
+        </div>
       </div>
     </div>
   );

@@ -1,20 +1,15 @@
 import { createContext, useContext, useReducer } from "react";
 import { AuthContext, AuthContextType } from "./AuthContext";
-
-export type UserContextType = {
-  displayName: string;
-  photoURL: string;
-  uid: string;
-};
+import { UserInfoType } from "../components/ChatList";
 
 type StateType = {
   chatId: string;
-  user: UserContextType | null;
+  user: UserInfoType | null;
 };
 
 type ActionType = {
   type: "CHANGE_USER";
-  payload: UserContextType;
+  payload: UserInfoType;
 };
 
 const INITIAL_STATE = {

@@ -1,16 +1,41 @@
 import Avatar from "./Avatar";
 import Message from "./Message";
 import { HiOutlinePhone } from "react-icons/hi";
-import { IoIosSend } from "react-icons/io";
 import { IoVideocamOutline } from "react-icons/io5";
-import { GrAttachment } from "react-icons/gr";
-import { mockChatList } from "../mockData/mockChatList";
-import { mockChatMessages } from "../mockData/mockChatMessages";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
+import { Unsubscribe } from "firebase/auth";
+import { DocumentData, doc, onSnapshot } from "firebase/firestore";
+import { db } from "../configs/firebase";
+import Input from "./Input";
+
+type MessageType = {
+  id: string;
+  img: string;
+  message: string;
+  timestamp: string;
+  senderId: string;
+  // isSeen: boolean;
+  // delivered: boolean;
+};
 
 const ChatDetails = () => {
+  const [messages, setMessages] = useState<DocumentData | undefined>([]);
   const { state } = useContext(ChatContext);
+
+  // subscribing to chats
+  useEffect(() => {
+    let unsub: Unsubscribe;
+    if (state.user) {
+      unsub = onSnapshot(doc(db, "chats", state.chatId), (doc) => {
+        doc.exists() && setMessages(doc.data().messages);
+      });
+    }
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
   return (
     <div className="flex h-full w-full flex-col ">
@@ -32,7 +57,7 @@ const ChatDetails = () => {
               {state.user && state.user.displayName}
             </span>
 
-            {/* presence */}
+            {/* user presence : (later) */}
           </div>
           <div className="flex items-center justify-between gap-2">
             <button
@@ -53,37 +78,22 @@ const ChatDetails = () => {
 
       {/* chat deatails section */}
       <div className="flex h-full flex-col items-start justify-start gap-2 overflow-y-auto bg-white p-4 dark:bg-gray-800 dark:text-white md:rounded-t-2xl [&::-webkit-scrollbar]:w-0">
-        {mockChatMessages.map((chat, index) => (
-          <Message
-            key={index}
-            message={chat.message}
-            timestamp={chat.timestamp}
-            isCurrentuser={chat.isCurrentUser}
-          />
-        ))}
+        {messages &&
+          messages.map((message: MessageType) => (
+            <Message
+              key={message.id}
+              img={message.img}
+              message={message.message}
+              timestamp={message.timestamp}
+              senderId={message.senderId}
+              // delivered={message.delivered}
+              // isSeen={message.isSeen}
+            />
+          ))}
       </div>
 
       {/* input */}
-      <div className="flex h-16 max-h-fit w-full flex-shrink-0 items-center justify-between gap-1 bg-white px-4 dark:bg-gray-800 md:gap-2 md:rounded-b-2xl">
-        <input
-          type="text"
-          className="block w-full rounded-full border-gray-400 px-5 py-2 focus:border-rose-500 focus:ring-rose-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
-          placeholder="type your message..."
-        />
-        <label
-          htmlFor="file"
-          className="cursor-pointer rounded-full bg-gray-200 p-2 text-center text-2xl font-medium text-gray-800 transition-all duration-150 hover:scale-95 hover:bg-gray-300 dark:bg-gray-800 dark:text-white"
-        >
-          <GrAttachment />
-        </label>
-        <input type="file" id="file" className="hidden" />
-        <button
-          type="submit"
-          className="cursor-pointer rounded-full bg-rose-500 p-2 text-center text-2xl font-medium text-white transition-all duration-150 hover:scale-95 hover:bg-rose-600"
-        >
-          <IoIosSend />
-        </button>
-      </div>
+      <Input />
     </div>
   );
 };

@@ -4,21 +4,22 @@ import { NavLink } from "react-router-dom";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Avatar from "./Avatar";
 import { useContext } from "react";
-import { ChatContext, UserContextType } from "../context/ChatContext";
+import { ChatContext } from "../context/ChatContext";
+import { UserInfoType } from "./ChatList";
 
 export type ChatListItemProps = {
-  user: UserContextType;
   displayName: string;
   unreadCount?: number;
-  text?: string;
+  user: UserInfoType;
   timestamp?: Date;
+  lastMessage?: string;
   isSeen?: boolean;
   id: string;
   photoURL: string;
   isLast: boolean;
 };
 
-const formatampm = (d: Date) => {
+export const formatampm = (d: Date) => {
   let hrs = d.getHours();
   let m = d.getMinutes();
   const ampm = hrs >= 12 ? "PM" : "AM";
@@ -35,7 +36,7 @@ const ChatListItem = ({
   displayName,
   unreadCount,
   user,
-  text,
+  lastMessage,
   isSeen,
   id,
   photoURL,
@@ -44,7 +45,7 @@ const ChatListItem = ({
   const isBelowLargeScreens = useMediaQuery({ maxWidth: 1024 });
   const { dispatch } = useContext(ChatContext);
 
-  const handleSelect = (user: UserContextType) => {
+  const handleSelect = (user: UserInfoType) => {
     dispatch({ type: "CHANGE_USER", payload: user });
   };
 
@@ -73,7 +74,7 @@ const ChatListItem = ({
             </span>
           </div>
 
-          {/* recent message and badge */}
+          {/* last message and badge */}
           <div className="flex w-full items-center justify-between">
             {/* checkmark icon and text message */}
             <div
@@ -90,7 +91,7 @@ const ChatListItem = ({
                   />
                 )}
               </div>{" "}
-              <span className="truncate dark:text-gray-400">{text}</span>
+              <span className="truncate dark:text-gray-400">{lastMessage}</span>
             </div>
 
             {/* unread icon */}

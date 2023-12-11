@@ -2,11 +2,13 @@ export const mockChatMessages = [
   {
     timestamp: "10:00 AM",
     isCurrentUser: true,
+    img: "https://images.pexels.com/photos/18252001/pexels-photo-18252001/free-photo-of-kite-surfer-silhouette-in-golden-water.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     message: "Good morning! Have you watched any good anime lately?",
   },
   {
     timestamp: "10:02 AM",
     isCurrentUser: false,
+    img: "https://images.pexels.com/photos/17976478/pexels-photo-17976478/free-photo-of-young-woman-in-white-off-the-shoulder-dress-enjoying-the-sunrise-in-the-meadow.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     message:
       "Hey! Absolutely, I just finished 'Attack on Titan.' Mind-blowing!",
   },

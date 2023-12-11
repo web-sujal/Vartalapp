@@ -70,7 +70,9 @@ const Search = ({ isSidebarOpen, setIsSidebarOpen }: SearchProps) => {
 
   // subscribing to search
   useEffect(() => {
-    handleSearch();
+    if (username.length) {
+      handleSearch();
+    }
   }, [username]);
 
   //
