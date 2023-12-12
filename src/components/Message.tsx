@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
-// import { formatampm } from "./ChatListItem";
-// import { Timestamp } from "firebase/firestore";
+import { formatampm } from "./ChatListItem";
 
 type MessageProps = {
   message: string;
@@ -10,9 +9,10 @@ type MessageProps = {
   senderId: string;
 };
 
-const Message = ({ message, img, senderId }: MessageProps) => {
+const Message = ({ message, img, timestamp, senderId }: MessageProps) => {
   const { currentUser } = useContext(AuthContext) as AuthContextType;
   const ref = useRef<HTMLDivElement>(null);
+  const formattedTimestamp = formatampm(timestamp);
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -49,7 +49,7 @@ const Message = ({ message, img, senderId }: MessageProps) => {
               : " text-gray-700 dark:text-gray-300"
           } w-full text-end text-xs font-light`}
         >
-          {/* {formatampm(timestamp)} */} 12:00
+          {formattedTimestamp}
         </div>
       </div>
     </div>

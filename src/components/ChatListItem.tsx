@@ -19,16 +19,12 @@ export type ChatListItemProps = {
   isLast: boolean;
 };
 
-export const formatampm = (d: Date) => {
-  let hrs = d.getHours();
-  let m = d.getMinutes();
-  const ampm = hrs >= 12 ? "PM" : "AM";
-  let mins = m < 10 ? `0${m}` : m; // Condition to add zero before minute
+export const formatampm = (d: string) => {
+  const secondsIndex = d.lastIndexOf(":"); // getting index of seconds
+  const time = d.slice(0, secondsIndex);
+  const ampm = d.slice(secondsIndex + 3);
 
-  hrs = hrs % 12;
-  hrs = hrs ? hrs : 12; // the hour '0' should be '12'
-
-  const currTime = hrs + ":" + mins + " " + ampm;
+  const currTime = time + ampm;
   return currTime;
 };
 

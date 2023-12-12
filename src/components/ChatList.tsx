@@ -18,7 +18,7 @@ export type UserInfoType = {
 
 type UserInfoObject = {
   userInfo: UserInfoType;
-  lastMessage: {
+  lastMessage?: {
     message: string;
   };
 };
@@ -66,9 +66,6 @@ const ChatList = () => {
                 .sort((a, b) => b[1].date - a[1].date)
                 .map((chat: ChatsType, index: number) => {
                   const isLast = mockChatList.length - 1 === index;
-                  console.log("chats: ", chats);
-                  console.log(chat[1].userInfo);
-                  console.log(chat[1].lastMessage.message);
 
                   return (
                     <ChatListItem
@@ -76,7 +73,9 @@ const ChatList = () => {
                       user={chat[1].userInfo}
                       id={chat[0]}
                       key={chat[0]}
-                      lastMessage={chat[1].lastMessage.message}
+                      lastMessage={
+                        chat[1].lastMessage && chat[1].lastMessage.message
+                      }
                       photoURL={chat[1].userInfo.photoURL}
                       isLast={isLast}
                     />

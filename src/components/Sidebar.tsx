@@ -52,6 +52,9 @@ const Sidebar = ({ setIsSidebarOpen }: SidebarProps) => {
           photoURL={currentUser && currentUser.photoURL}
           displayName={currentUser && currentUser.displayName}
         />
+        <span className="mx-auto pl-1 text-center text-xs tracking-tight dark:text-white">
+          {currentUser && currentUser.displayName}
+        </span>
       </div>
 
       {/* mid */}

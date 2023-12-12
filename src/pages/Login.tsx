@@ -70,7 +70,7 @@ const Login = () => {
       });
 
       // creating user chatList in firestore
-      await setDoc(doc(db, "chatLists", userCredential.user.uid), {});
+      await setDoc(doc(db, "chatLists", user.uid), {});
 
       navigate("/chats");
     } catch (error) {

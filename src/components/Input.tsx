@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 // firebase imports
 import {
-  Timestamp,
   arrayUnion,
   doc,
   serverTimestamp,
@@ -48,7 +47,7 @@ const Input = () => {
                   img: downloadURL,
                   message,
                   senderId: currentUser.uid,
-                  timestamp: Timestamp.now(),
+                  timestamp: new Date().toLocaleTimeString(),
                 }),
               });
             },
@@ -59,7 +58,7 @@ const Input = () => {
               id: uuidv4(),
               message,
               senderId: currentUser.uid,
-              timestamp: Timestamp.now(),
+              timestamp: new Date().toLocaleTimeString(),
             }),
           });
         }
