@@ -6,9 +6,11 @@ import Avatar from "./Avatar";
 import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
 import { UserInfoType } from "./ChatList";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 
 export type ChatListItemProps = {
   displayName: string;
+  senderId?: string;
   // unreadCount?: number;
   user: UserInfoType;
   timestamp?: string;
@@ -18,18 +20,10 @@ export type ChatListItemProps = {
   photoURL: string;
 };
 
-// export const formatampm = (d: string) => {
-//   const secondsIndex = d.lastIndexOf(":"); // getting index of seconds
-//   const time = d.slice(0, secondsIndex);
-//   const ampm = d.slice(secondsIndex + 3);
-
-//   const currTime = time + ampm;
-//   return currTime;
-// };
-
 const ChatListItem = ({
   displayName,
   // unreadCount,
+  senderId,
   user,
   lastMessage,
   seen, // later
@@ -39,6 +33,7 @@ const ChatListItem = ({
 }: ChatListItemProps) => {
   const isBelowLargeScreens = useMediaQuery({ maxWidth: 1024 });
   const { dispatch } = useContext(ChatContext);
+  const { currentUser } = useContext(AuthContext) as AuthContextType;
 
   const handleSelect = (user: UserInfoType) => {
     dispatch({ type: "CHANGE_USER", payload: user });
@@ -75,15 +70,17 @@ const ChatListItem = ({
             {/* checkmark icon and text message */}
             <div
               className={`${
-                seen ? "" : "h-4"
-              } flex w-5/6 items-center justify-start gap-1 py-2 pt-3 text-base tracking-tight text-gray-700`}
+                lastMessage && lastMessage.length ? "" : "h-4"
+              } flex w-5/6 items-center justify-start gap-1 text-base tracking-tight text-gray-700`}
             >
               <div className="flex-shrink-0">
-                <IoCheckmarkDoneSharp
-                  className={`mt-1 text-sm ${
-                    seen ? "text-blue-500" : "text-gray-600"
-                  }`}
-                />
+                {senderId !== (currentUser && currentUser.uid) && (
+                  <IoCheckmarkDoneSharp
+                    className={`mt-1 text-sm ${
+                      seen ? "text-blue-500" : "text-gray-600"
+                    }`}
+                  />
+                )}
               </div>{" "}
               <span className="truncate dark:text-gray-400">{lastMessage}</span>
             </div>

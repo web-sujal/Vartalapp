@@ -19,6 +19,7 @@ type UserInfoObject = {
   lastMessage?: {
     message: string;
     seen: boolean;
+    senderId: string;
     timestamp: string;
   };
 };
@@ -68,6 +69,7 @@ const ChatList = () => {
                   return (
                     <ChatListItem
                       displayName={chat[1].userInfo.displayName}
+                      senderId={chat[1].lastMessage?.senderId}
                       user={chat[1].userInfo}
                       id={chat[0]}
                       key={chat[0]}

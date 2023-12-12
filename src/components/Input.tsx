@@ -46,6 +46,7 @@ const Input = () => {
                   id: uuidv4(),
                   img: downloadURL,
                   message,
+                  seen: false,
                   senderId: currentUser.uid,
                   timestamp: new Date().toLocaleTimeString("hi-IN", {
                     timeStyle: "short",
@@ -60,6 +61,7 @@ const Input = () => {
             messages: arrayUnion({
               id: uuidv4(),
               message,
+              seen: false,
               senderId: currentUser.uid,
               timestamp: new Date().toLocaleTimeString("hi-IN", {
                 timeStyle: "short",
@@ -74,6 +76,7 @@ const Input = () => {
           [state.chatId + ".lastMessage"]: {
             message,
             seen: true,
+            senderId: currentUser.uid,
             timestamp: new Date().toLocaleTimeString("hi-IN", {
               timeStyle: "short",
               hour12: true,
@@ -88,6 +91,7 @@ const Input = () => {
             [state.chatId + ".lastMessage"]: {
               message,
               seen: false,
+              senderId: currentUser.uid,
               timestamp: new Date().toLocaleTimeString("hi-IN", {
                 timeStyle: "short",
                 hour12: true,

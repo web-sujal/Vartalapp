@@ -8,18 +8,22 @@ import { Unsubscribe } from "firebase/auth";
 import { DocumentData, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../configs/firebase";
 import Input from "./Input";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 
 type MessageType = {
   id: string;
   img: string;
   message: string;
   timestamp: string;
+  seen: boolean;
   senderId: string;
 };
 
 const ChatDetails = () => {
   const [messages, setMessages] = useState<DocumentData | undefined>([]);
   const { state } = useContext(ChatContext);
+
+  const { currentUser } = useContext(AuthContext) as AuthContextType;
 
   // subscribing to chats
   useEffect(() => {
@@ -40,13 +44,11 @@ const ChatDetails = () => {
   // updating seen status
   useEffect(() => {
     const updateSeen = async () => {
-      if (state.user) {
+      if (state.user && currentUser) {
         try {
-          const docRef = doc(db, "chatLists", state.user.uid);
+          const docRef = doc(db, "chatLists", currentUser.uid);
           await updateDoc(docRef, {
-            [state.chatId + ".lastMessage"]: {
-              seen: true,
-            },
+            [state.chatId + ".lastMessage.seen"]: true,
           });
         } catch (error) {
           console.error(error);
@@ -103,6 +105,7 @@ const ChatDetails = () => {
             <Message
               key={message.id}
               img={message.img}
+              // seen={message.seen}
               message={message.message}
               timestamp={message.timestamp}
               senderId={message.senderId}
