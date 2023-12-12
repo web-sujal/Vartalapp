@@ -56,7 +56,9 @@ const ChatListItem = ({
     >
       <div className="group  flex w-full items-center justify-between gap-2">
         {/* avatar */}
-        <Avatar photoURL={photoURL} displayName={displayName} />
+        <div className="transition-all duration-150 group-hover:scale-110">
+          <Avatar photoURL={photoURL} displayName={displayName} />
+        </div>
 
         {/* details */}
         <div className="flex flex-1 flex-col items-center justify-around overflow-hidden">
@@ -76,7 +78,7 @@ const ChatListItem = ({
             <div
               className={`${
                 isSeen ? "" : "h-4"
-              } flex w-5/6 items-center justify-start gap-1 text-base tracking-tight text-gray-700`}
+              } flex w-5/6 items-center justify-start gap-1 py-2 pt-3 text-base tracking-tight text-gray-700`}
             >
               <div className="flex-shrink-0">
                 {isSeen && (

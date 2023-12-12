@@ -33,7 +33,9 @@ const ChatDetails = () => {
     }
 
     return () => {
-      unsub();
+      if (unsub) {
+        unsub();
+      }
     };
   }, []);
 
