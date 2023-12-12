@@ -5,7 +5,7 @@ import { IoVideocamOutline } from "react-icons/io5";
 import { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
 import { Unsubscribe } from "firebase/auth";
-import { DocumentData, doc, onSnapshot } from "firebase/firestore";
+import { DocumentData, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../configs/firebase";
 import Input from "./Input";
 
@@ -15,8 +15,6 @@ type MessageType = {
   message: string;
   timestamp: string;
   senderId: string;
-  // isSeen: boolean;
-  // delivered: boolean;
 };
 
 const ChatDetails = () => {
@@ -37,6 +35,26 @@ const ChatDetails = () => {
         unsub();
       }
     };
+  }, []);
+
+  // updating seen status
+  useEffect(() => {
+    const updateSeen = async () => {
+      if (state.user) {
+        try {
+          const docRef = doc(db, "chatLists", state.user.uid);
+          await updateDoc(docRef, {
+            [state.chatId + ".lastMessage"]: {
+              seen: true,
+            },
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    updateSeen();
   }, []);
 
   return (
@@ -88,8 +106,6 @@ const ChatDetails = () => {
               message={message.message}
               timestamp={message.timestamp}
               senderId={message.senderId}
-              // delivered={message.delivered}
-              // isSeen={message.isSeen}
             />
           ))}
       </div>

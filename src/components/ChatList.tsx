@@ -2,7 +2,6 @@ import { Outlet } from "react-router";
 import Sidebar from "./Sidebar";
 import { useContext, useEffect, useState } from "react";
 import ChatListItem from "./ChatListItem";
-import { mockChatList } from "../mockData/mockChatList";
 
 import Search from "./Search";
 import { DocumentData, Unsubscribe, doc, onSnapshot } from "firebase/firestore";
@@ -13,13 +12,14 @@ export type UserInfoType = {
   displayName: string;
   uid: string;
   photoURL: string;
-  lastMessage: string;
 };
 
 type UserInfoObject = {
   userInfo: UserInfoType;
   lastMessage?: {
     message: string;
+    seen: boolean;
+    timestamp: string;
   };
 };
 
@@ -64,9 +64,7 @@ const ChatList = () => {
             {chats &&
               Object.entries(chats)
                 .sort((a, b) => b[1].date - a[1].date)
-                .map((chat: ChatsType, index: number) => {
-                  const isLast = mockChatList.length - 1 === index;
-
+                .map((chat: ChatsType) => {
                   return (
                     <ChatListItem
                       displayName={chat[1].userInfo.displayName}
@@ -76,8 +74,9 @@ const ChatList = () => {
                       lastMessage={
                         chat[1].lastMessage && chat[1].lastMessage.message
                       }
+                      seen={chat[1].lastMessage?.seen}
+                      timestamp={chat[1].lastMessage?.timestamp}
                       photoURL={chat[1].userInfo.photoURL}
-                      isLast={isLast}
                     />
                   );
                 })}

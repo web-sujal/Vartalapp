@@ -9,34 +9,33 @@ import { UserInfoType } from "./ChatList";
 
 export type ChatListItemProps = {
   displayName: string;
-  unreadCount?: number;
+  // unreadCount?: number;
   user: UserInfoType;
-  timestamp?: Date;
+  timestamp?: string;
   lastMessage?: string;
-  isSeen?: boolean;
+  seen?: boolean;
   id: string;
   photoURL: string;
-  isLast: boolean;
 };
 
-export const formatampm = (d: string) => {
-  const secondsIndex = d.lastIndexOf(":"); // getting index of seconds
-  const time = d.slice(0, secondsIndex);
-  const ampm = d.slice(secondsIndex + 3);
+// export const formatampm = (d: string) => {
+//   const secondsIndex = d.lastIndexOf(":"); // getting index of seconds
+//   const time = d.slice(0, secondsIndex);
+//   const ampm = d.slice(secondsIndex + 3);
 
-  const currTime = time + ampm;
-  return currTime;
-};
+//   const currTime = time + ampm;
+//   return currTime;
+// };
 
 const ChatListItem = ({
   displayName,
-  unreadCount,
+  // unreadCount,
   user,
   lastMessage,
-  isSeen,
+  seen, // later
   id,
   photoURL,
-  isLast,
+  timestamp,
 }: ChatListItemProps) => {
   const isBelowLargeScreens = useMediaQuery({ maxWidth: 1024 });
   const { dispatch } = useContext(ChatContext);
@@ -47,7 +46,6 @@ const ChatListItem = ({
 
   return (
     <NavLink
-      key={id}
       onClick={() => handleSelect(user)}
       to={isBelowLargeScreens ? `/mchats/${id}` : `/chats/${id}`}
       className={({ isActive }) =>
@@ -68,7 +66,7 @@ const ChatListItem = ({
               {displayName}
             </span>
             <span className=" text-xs text-gray-600 dark:text-gray-400">
-              {/* formatampm(timestamp) */}
+              {timestamp}
             </span>
           </div>
 
@@ -77,33 +75,29 @@ const ChatListItem = ({
             {/* checkmark icon and text message */}
             <div
               className={`${
-                isSeen ? "" : "h-4"
+                seen ? "" : "h-4"
               } flex w-5/6 items-center justify-start gap-1 py-2 pt-3 text-base tracking-tight text-gray-700`}
             >
               <div className="flex-shrink-0">
-                {isSeen && (
-                  <IoCheckmarkDoneSharp
-                    className={`mt-1 text-sm ${
-                      isSeen ? "text-blue-500" : "text-gray-600"
-                    }`}
-                  />
-                )}
+                <IoCheckmarkDoneSharp
+                  className={`mt-1 text-sm ${
+                    seen ? "text-blue-500" : "text-gray-600"
+                  }`}
+                />
               </div>{" "}
               <span className="truncate dark:text-gray-400">{lastMessage}</span>
             </div>
 
             {/* unread icon */}
-            {unreadCount !== 0 && (
+            {/* {unreadCount !== 0 && (
               <div className="py-1/2 rounded-full bg-rose-500 px-1 text-center text-xs font-medium text-white">
                 {unreadCount}
               </div>
-            )}
+            )} */}
           </div>
 
           {/* divider */}
-          {!isLast && (
-            <hr className="hr-class mt-2 w-full border-gray-300 dark:border-gray-400" />
-          )}
+          <hr className="hr-class mt-2 w-full border-gray-300 dark:border-gray-400" />
         </div>
       </div>
     </NavLink>

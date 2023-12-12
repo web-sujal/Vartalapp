@@ -47,7 +47,10 @@ const Input = () => {
                   img: downloadURL,
                   message,
                   senderId: currentUser.uid,
-                  timestamp: new Date().toLocaleTimeString(),
+                  timestamp: new Date().toLocaleTimeString("hi-IN", {
+                    timeStyle: "short",
+                    hour12: true,
+                  }),
                 }),
               });
             },
@@ -58,7 +61,10 @@ const Input = () => {
               id: uuidv4(),
               message,
               senderId: currentUser.uid,
-              timestamp: new Date().toLocaleTimeString(),
+              timestamp: new Date().toLocaleTimeString("hi-IN", {
+                timeStyle: "short",
+                hour12: true,
+              }),
             }),
           });
         }
@@ -67,6 +73,11 @@ const Input = () => {
         await updateDoc(doc(db, "chatLists", currentUser.uid), {
           [state.chatId + ".lastMessage"]: {
             message,
+            seen: true,
+            timestamp: new Date().toLocaleTimeString("hi-IN", {
+              timeStyle: "short",
+              hour12: true,
+            }),
           },
           [state.chatId + ".date"]: serverTimestamp(),
         });
@@ -76,6 +87,11 @@ const Input = () => {
           await updateDoc(doc(db, "chatLists", state.user.uid), {
             [state.chatId + ".lastMessage"]: {
               message,
+              seen: false,
+              timestamp: new Date().toLocaleTimeString("hi-IN", {
+                timeStyle: "short",
+                hour12: true,
+              }),
             },
             [state.chatId + ".date"]: serverTimestamp(),
           });
